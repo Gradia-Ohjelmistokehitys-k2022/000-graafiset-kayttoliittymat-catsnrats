@@ -9,7 +9,7 @@ Jokainen tehtävä sijoitetaan tänne omaan hakemistoonsa.
 
 # Git ohje
 
-# SSH avaimen luonti Githubia varten
+# (unohda) SSH avaimen luonti Githubia varten
 Perjantaina 13. elokuuta Github muutti kirjautumisvaatimuksiaan ja login/salasana kirjautuminen ei enää toimi. Tämän takia luomme kaikille SSH avaimet ja käytämme niitä autentikointiin Githubin kanssa.
 **HUOM! Jos pääset normaalisti kirjautumaan Githubiin ei SSH avaimiin siirtyminen ole pakollista. Tee siis nämä vaiheet vain jos Github ei enää päästä sinua sisään!**
 
@@ -35,12 +35,12 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDdFIDeYjLcmRENhfZC16feD6/TJ1WrpSAfBkxr2v2+
 Tämä tehdään vain kerran kurssin aluksi. Olet saanut itsellesi linkin github-classroomiin, joka luo sinulle automaattisesti repositoryn. Valitse oma nimesi listasta.
 
 1. Avaa GitBash hakemistoon jonka alle haluat tehtäväkansion. Tämä onnistuu klikkaamalla oikealla hiirennapilla hakemistoa Windows Explorerissa ja valitsemalla "Avaa GitBash tässä."
-2. kirjoita komento```git clone``` "oman repon nimi joka löytyy yläosan Code napin takaa" esim. minun toisella tililläni sen näyttäisi seuraavanlaiselta: git@github.com:Gradia-Ohjelmistokehitys-k2022/graafiset-kayttoliittymat-vilbohamalainen.git
+2. kirjoita komento```git clone``` "oman repon nimi joka löytyy yläosan Code napin takaa" (esim. minun toisella tililläni sen näyttäisi seuraavanlaiselta: git@github.com:Gradia-Ohjelmistokehitys-k2022/graafiset-kayttoliittymat-vilbohamalainen.git)
 
 # Uusien tehtävänantojen hakeminen
 Kaikki tämä tehdään GitBashissä harjoitustehtävän hakemistossa.
 1. ```git status``` - tarkista että olet main haarassa (branch), ja että sinulla ei ole avoimia muutoksia (jotka näkyvät punaisena tai vihreänä). Mikäli niitä on, tallenna ne ensin komennoilla ```git add .```, ```git commit -m "Muutokset talteen."```.
-2. <mark>Tämä tehdään vain kerran.</mark> Lisätään alkuperäinen pohja haettavaksi seuraavalla komennolla, jos muutoksia materiaaleihin tulee.```git remote add upstream https://github.com/Gradia-Ohjelmistokehitys-k2022/graafiset-kayttoliittymat-pohja.git```
+2. <mark>Tämä tehdään vain kerran.</mark> Lisätään alkuperäinen pohja haettavaksi seuraavalla komennolla, jos muutoksia materiaaleihin tulee.```git remote add upstream https://github.com/PetriRaatikainenGradia/Graafiset-kayttoliittymat-k24```
 3. Haetaan uusin versio upstreamista ``git pull upstream main --allow-unrelated-histories`` --allow-unrelated-histories voi ratkaista githubclassroomiin liittyviä ongelmia.
 4. Varmista, että olet main branchissa seuraavalla komennolla```git checkout main```
 
