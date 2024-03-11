@@ -59,6 +59,7 @@ namespace Array
             MessageBox.Show($"Numero {tallennettuNum} tallennettu taulukon indeksiin {indeksi}", "Luku tallennettu.", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // kokeilin try-catchia vain täällä, numeron haussa
         private void buttonHaku_Click(object sender, EventArgs e)
         {
             // onko taulukko luotu ?
@@ -68,24 +69,37 @@ namespace Array
                 return;
             }
 
-            // taulukosta valittavalle indeksille...
-            if (!int.TryParse(textBoxHakuTInd.Text, out int indeksi))
+            // try-catchilla syötteen tarkistus
+            try
             {
-                MessageBox.Show("Anna kokonaisluku.", "Haettu indeksi !", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                // parsii syötteen
+                int indeksi = int.Parse(textBoxHakuTInd.Text);
 
-            // tarkistus, onko haettu indeksi taulukon rajoissa
-            if (indeksi < 0 || indeksi >= lukuTaulukko.Length)
+                // tarkistus, onko haettu indeksi taulukon rajoissa
+                if (indeksi < 0 || indeksi >= lukuTaulukko.Length)
+                {
+                    MessageBox.Show($"Tarkista haettu indeksi. Indeksin pitää olla väliltä 0 ja {lukuTaulukko.Length - 1}", "H U O M !", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                // numero haetusta indeksistä muuttujaan
+                int hakuTulos = lukuTaulukko[indeksi];
+
+                // näytetään löydetty numero
+                labelHakuTulos.Text = $"Numero indeksissä {indeksi} on {hakuTulos}";
+            }
+            catch (FormatException) // syötteen tarkitus, kirjaimet ym.
             {
-                MessageBox.Show($"Tarkista haettu indeksi. Indeksin pitää olla väliltä 0 ja {lukuTaulukko.Length - 1}", "H U O M !", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Tarkista annoitko kokonaisluvun indeksille.");
             }
-
-            // numero haetusta indeksistä muuttujaan
-            int hakuTulos = lukuTaulukko[indeksi];
-
-            // näytetään löydetty numero
-            labelHakuTulos.Text = $"Numero indeksissä {indeksi} on {hakuTulos}";
+            // Mikäli käyttäjä syöttää luvun mikä ei mahdu tyyppiin 'int': Int32.MaxValue tai Int32.MinValue (-2,147,483,648 to 2,147,483,647)
+            catch (OverflowException)
+            {
+                MessageBox.Show("Annettu luku on liian suuri tai liian pieni.");
+            }
+            catch (Exception ex) // muille virheille ja poikkeuksille
+            {
+                MessageBox.Show($"VIRHE:\n\n {ex}.");
+            }            
         }
     }
 }
