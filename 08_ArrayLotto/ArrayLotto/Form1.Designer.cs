@@ -28,19 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             buttonArpa = new Button();
             labelNumerot = new Label();
             groupBox1 = new GroupBox();
-            labelTulos = new Label();
-            textBoxRivi7 = new TextBox();
-            textBoxRivi6 = new TextBox();
-            textBoxRivi5 = new TextBox();
-            textBoxRivi4 = new TextBox();
-            textBoxRivi3 = new TextBox();
-            textBoxRivi2 = new TextBox();
-            textBoxRivi1 = new TextBox();
+            buttonTyhjennäRivit = new Button();
+            richTextBox7 = new RichTextBox();
+            richTextBox6 = new RichTextBox();
+            richTextBox5 = new RichTextBox();
+            richTextBox4 = new RichTextBox();
+            richTextBox3 = new RichTextBox();
+            richTextBox2 = new RichTextBox();
+            richTextBox1 = new RichTextBox();
             label1 = new Label();
-            buttonTarkista = new Button();
+            toolTip1 = new ToolTip(components);
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -48,9 +49,9 @@
             // 
             buttonArpa.Location = new Point(44, 73);
             buttonArpa.Name = "buttonArpa";
-            buttonArpa.Size = new Size(200, 34);
+            buttonArpa.Size = new Size(186, 78);
             buttonArpa.TabIndex = 0;
-            buttonArpa.Text = "Arvo lottonumerot";
+            buttonArpa.Text = "Arvo ja tarkista\r\nlottonumerot";
             buttonArpa.UseVisualStyleBackColor = true;
             buttonArpa.Click += buttonArpa_Click;
             // 
@@ -65,99 +66,104 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(labelTulos);
-            groupBox1.Controls.Add(textBoxRivi7);
-            groupBox1.Controls.Add(textBoxRivi6);
-            groupBox1.Controls.Add(textBoxRivi5);
-            groupBox1.Controls.Add(textBoxRivi4);
-            groupBox1.Controls.Add(textBoxRivi3);
-            groupBox1.Controls.Add(textBoxRivi2);
-            groupBox1.Controls.Add(textBoxRivi1);
+            groupBox1.Controls.Add(buttonTyhjennäRivit);
+            groupBox1.Controls.Add(richTextBox7);
+            groupBox1.Controls.Add(richTextBox6);
+            groupBox1.Controls.Add(richTextBox5);
+            groupBox1.Controls.Add(richTextBox4);
+            groupBox1.Controls.Add(richTextBox3);
+            groupBox1.Controls.Add(richTextBox2);
+            groupBox1.Controls.Add(richTextBox1);
             groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(buttonTarkista);
-            groupBox1.Location = new Point(375, 73);
+            groupBox1.Location = new Point(475, 29);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(364, 330);
+            groupBox1.Size = new Size(241, 409);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Lottorivit ja tarkistus";
+            toolTip1.SetToolTip(groupBox1, "Anna lottorivit väliltä 1 - 40 pilkuilla eroteltuna.\r\nTyhjennä rivit ennen uuden rivin arpomista ja tarkistuksia.");
             // 
-            // labelTulos
+            // buttonTyhjennäRivit
             // 
-            labelTulos.AutoSize = true;
-            labelTulos.Location = new Point(159, 265);
-            labelTulos.Name = "labelTulos";
-            labelTulos.Size = new Size(176, 25);
-            labelTulos.TabIndex = 9;
-            labelTulos.Text = "OSUNEET NUMEROT";
+            buttonTyhjennäRivit.Location = new Point(6, 348);
+            buttonTyhjennäRivit.Name = "buttonTyhjennäRivit";
+            buttonTyhjennäRivit.Size = new Size(159, 34);
+            buttonTyhjennäRivit.TabIndex = 16;
+            buttonTyhjennäRivit.Text = "Tyhjennä rivit";
+            buttonTyhjennäRivit.UseVisualStyleBackColor = true;
+            buttonTyhjennäRivit.Click += buttonTyhjennäRivit_Click;
             // 
-            // textBoxRivi7
+            // richTextBox7
             // 
-            textBoxRivi7.Location = new Point(185, 159);
-            textBoxRivi7.Name = "textBoxRivi7";
-            textBoxRivi7.Size = new Size(150, 31);
-            textBoxRivi7.TabIndex = 8;
+            richTextBox7.Location = new Point(6, 290);
+            richTextBox7.MaxLength = 29;
+            richTextBox7.Name = "richTextBox7";
+            richTextBox7.Size = new Size(224, 31);
+            richTextBox7.TabIndex = 15;
+            richTextBox7.Text = "";
             // 
-            // textBoxRivi6
+            // richTextBox6
             // 
-            textBoxRivi6.Location = new Point(185, 113);
-            textBoxRivi6.Name = "textBoxRivi6";
-            textBoxRivi6.Size = new Size(150, 31);
-            textBoxRivi6.TabIndex = 7;
+            richTextBox6.Location = new Point(6, 253);
+            richTextBox6.MaxLength = 29;
+            richTextBox6.Name = "richTextBox6";
+            richTextBox6.Size = new Size(224, 31);
+            richTextBox6.TabIndex = 14;
+            richTextBox6.Text = "";
             // 
-            // textBoxRivi5
+            // richTextBox5
             // 
-            textBoxRivi5.Location = new Point(185, 67);
-            textBoxRivi5.Name = "textBoxRivi5";
-            textBoxRivi5.Size = new Size(150, 31);
-            textBoxRivi5.TabIndex = 6;
+            richTextBox5.Location = new Point(6, 216);
+            richTextBox5.MaxLength = 29;
+            richTextBox5.Name = "richTextBox5";
+            richTextBox5.Size = new Size(224, 31);
+            richTextBox5.TabIndex = 13;
+            richTextBox5.Text = "";
             // 
-            // textBoxRivi4
+            // richTextBox4
             // 
-            textBoxRivi4.Location = new Point(16, 205);
-            textBoxRivi4.Name = "textBoxRivi4";
-            textBoxRivi4.Size = new Size(150, 31);
-            textBoxRivi4.TabIndex = 5;
+            richTextBox4.Location = new Point(6, 179);
+            richTextBox4.MaxLength = 29;
+            richTextBox4.Name = "richTextBox4";
+            richTextBox4.Size = new Size(224, 31);
+            richTextBox4.TabIndex = 12;
+            richTextBox4.Text = "";
             // 
-            // textBoxRivi3
+            // richTextBox3
             // 
-            textBoxRivi3.Location = new Point(16, 159);
-            textBoxRivi3.Name = "textBoxRivi3";
-            textBoxRivi3.Size = new Size(150, 31);
-            textBoxRivi3.TabIndex = 4;
+            richTextBox3.Location = new Point(6, 142);
+            richTextBox3.MaxLength = 29;
+            richTextBox3.Name = "richTextBox3";
+            richTextBox3.Size = new Size(224, 31);
+            richTextBox3.TabIndex = 11;
+            richTextBox3.Text = "";
             // 
-            // textBoxRivi2
+            // richTextBox2
             // 
-            textBoxRivi2.Location = new Point(16, 113);
-            textBoxRivi2.Name = "textBoxRivi2";
-            textBoxRivi2.Size = new Size(150, 31);
-            textBoxRivi2.TabIndex = 3;
+            richTextBox2.Location = new Point(6, 104);
+            richTextBox2.MaxLength = 29;
+            richTextBox2.Name = "richTextBox2";
+            richTextBox2.Size = new Size(224, 31);
+            richTextBox2.TabIndex = 10;
+            richTextBox2.Text = "";
             // 
-            // textBoxRivi1
+            // richTextBox1
             // 
-            textBoxRivi1.Location = new Point(16, 67);
-            textBoxRivi1.Name = "textBoxRivi1";
-            textBoxRivi1.Size = new Size(150, 31);
-            textBoxRivi1.TabIndex = 2;
+            richTextBox1.Location = new Point(6, 67);
+            richTextBox1.MaxLength = 28;
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(224, 31);
+            richTextBox1.TabIndex = 3;
+            richTextBox1.Text = "";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(16, 39);
+            label1.Location = new Point(6, 39);
             label1.Name = "label1";
             label1.Size = new Size(93, 25);
             label1.TabIndex = 1;
             label1.Text = "Lottorivisi:";
-            // 
-            // buttonTarkista
-            // 
-            buttonTarkista.Location = new Point(16, 265);
-            buttonTarkista.Name = "buttonTarkista";
-            buttonTarkista.Size = new Size(112, 34);
-            buttonTarkista.TabIndex = 0;
-            buttonTarkista.Text = "Tarkista rivit";
-            buttonTarkista.UseVisualStyleBackColor = true;
-            buttonTarkista.Click += buttonTarkista_Click;
             // 
             // Form1
             // 
@@ -181,14 +187,14 @@
         private Label labelNumerot;
         private GroupBox groupBox1;
         private Label label1;
-        private Button buttonTarkista;
-        private TextBox textBoxRivi4;
-        private TextBox textBoxRivi3;
-        private TextBox textBoxRivi2;
-        private TextBox textBoxRivi1;
-        private TextBox textBoxRivi7;
-        private TextBox textBoxRivi6;
-        private TextBox textBoxRivi5;
-        private Label labelTulos;
+        private RichTextBox richTextBox1;
+        private RichTextBox richTextBox7;
+        private RichTextBox richTextBox6;
+        private RichTextBox richTextBox5;
+        private RichTextBox richTextBox4;
+        private RichTextBox richTextBox3;
+        private RichTextBox richTextBox2;
+        private Button buttonTyhjennäRivit;
+        private ToolTip toolTip1;
     }
 }
