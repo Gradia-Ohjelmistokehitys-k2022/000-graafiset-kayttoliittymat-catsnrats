@@ -48,10 +48,48 @@ namespace PaintMouse
                 // raapustaa formin uudestaan p‰ivitt‰‰kseen tikku-ukon paikan
                 Invalidate();
             }
-            else 
+            else
             {
                 // mik‰li koordinaattien parsiminen ep‰onnistuu
                 MessageBox.Show("Virheelliset koordinaatit. Kokeile uudestaan.", "Virhe", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool isDragging = false; // boolean "raahaamista" varten
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                // p‰ivitt‰‰ tikku-ukon koordinaatit hiiren painalluksella
+                piste = e.Location;
+
+                // raapustaa formin uudestaan p‰ivitt‰‰kseen tikku-ukon paikan
+                Invalidate();
+            }
+
+            if (e.Button == MouseButtons.Left) // asettaa 'isDraggin' arvoksi true
+            {
+                isDragging = true;
+            }
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging) // simuloi raahaamisen
+            {
+                // p‰ivitt‰‰ tikku-ukon koordinaatit perustuen hiiren liikkeeseen
+                piste = e.Location;
+
+                // p‰ivitt‰‰ formin
+                Invalidate();
+            }
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) // hiiren painikkeen vapauttaminen muuttaa 'isDraggin' arvoon false
+            {
+                isDragging = false;
             }
         }
     }
