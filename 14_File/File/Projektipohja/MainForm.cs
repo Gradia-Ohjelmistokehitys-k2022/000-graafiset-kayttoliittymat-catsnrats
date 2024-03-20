@@ -49,7 +49,7 @@ namespace Projektipohja
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Title = "Open";
             openFileDialog.ShowReadOnly = true;
-            openFileDialog.Filter = "Text documents (*.txt) | *.txt | All files | *.*";
+            openFileDialog.Filter = "Text documents (*.txt)|*.txt|All files|*.*";
 
             // avataan Windowsin standardi avausdialogi
             if (openFileDialog.ShowDialog() == DialogResult.OK) 
@@ -58,7 +58,7 @@ namespace Projektipohja
                 editorFileName = openFileDialog.FileName;
 
                 // luetaan tiedoston sisältö ja tuodaan se näytölle
-                //ReadFile();
+                ReadFile(editorFileName);
 
                 SetFormTitleText();
             }
@@ -72,7 +72,7 @@ namespace Projektipohja
             }
             else
             {
-                //SaveFile();
+                SaveFile(editorFileName);
             }
         }
 
@@ -81,20 +81,54 @@ namespace Projektipohja
             // standardi talletusdialogiobjekti ja sen alustus
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-            saveFileDialog.Filter = "Text documents (*.txt) | *.txt | All files | *.*";
+            saveFileDialog.Filter = "Text documents (*.txt)|*.txt|All files|*.*";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 // talletetaan tiedoston nimi ja polku lukemista varten
                 editorFileName = saveFileDialog.FileName;
-
-                // luetaan tiedoston sisältö ja tuodaan se näytölle
-                //Save file();
+                
+                SaveFile(editorFileName); // SaveFile-metodin kutsu
 
                 SetFormTitleText();
             }
         }
 
-        // MUISTA metodit ReadFile() ja SaveFile()
+        // reads file into RichTextBox
+        private void ReadFile(string filePath)
+        {
+            try
+            {
+                // create StreamReader object and read the file
+                using (StreamReader strmReader = new StreamReader(filePath))
+                {
+                    // read
+                    richTextBox1.Clear();
+                    richTextBox1.Text = strmReader.ReadToEnd();
+                }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Open File", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        // apumetodi tiedoston tallennukseen
+        private void SaveFile(string filePath)
+        {
+            try
+            {
+                // create StreamWriter object and write text into file
+                using (StreamWriter strmWriter = new StreamWriter(filePath))
+                {
+                    // write
+                    strmWriter.Write(richTextBox1.Text);
+                }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Save File", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }        
     }
 }
