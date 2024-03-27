@@ -9,45 +9,52 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Background.png" />
-    <None Remove="Assets\Block-Empty.png" />
-    <None Remove="Assets\Block-I.png" />
-    <None Remove="Assets\Block-J.png" />
-    <None Remove="Assets\Block-L.png" />
-    <None Remove="Assets\Block-O.png" />
-    <None Remove="Assets\Block-S.png" />
-    <None Remove="Assets\Block-T.png" />
-    <None Remove="Assets\Block-Z.png" />
-    <None Remove="Assets\Icon.ico" />
-    <None Remove="Assets\TileBlue.png" />
-    <None Remove="Assets\TileCyan.png" />
-    <None Remove="Assets\TileEmpty.png" />
-    <None Remove="Assets\TileGreen.png" />
-    <None Remove="Assets\TileOrange.png" />
-    <None Remove="Assets\TilePurple.png" />
-    <None Remove="Assets\TileRed.png" />
-    <None Remove="Assets\TileYellow.png" />
+    <None Remove="View\Assets\Background.png" />
+    <None Remove="View\Assets\Block-Empty.png" />
+    <None Remove="View\Assets\Block-I.png" />
+    <None Remove="View\Assets\Block-J.png" />
+    <None Remove="View\Assets\Block-L.png" />
+    <None Remove="View\Assets\Block-O.png" />
+    <None Remove="View\Assets\Block-S.png" />
+    <None Remove="View\Assets\Block-T.png" />
+    <None Remove="View\Assets\Block-Z.png" />
+    <None Remove="View\Assets\Icon.ico" />
+    <None Remove="View\Assets\TileBlue.png" />
+    <None Remove="View\Assets\TileCyan.png" />
+    <None Remove="View\Assets\TileEmpty.png" />
+    <None Remove="View\Assets\TileGreen.png" />
+    <None Remove="View\Assets\TileOrange.png" />
+    <None Remove="View\Assets\TilePurple.png" />
+    <None Remove="View\Assets\TileRed.png" />
+    <None Remove="View\Assets\TileYellow.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Background.png" />
-    <Resource Include="Assets\Block-Empty.png" />
-    <Resource Include="Assets\Block-I.png" />
-    <Resource Include="Assets\Block-J.png" />
-    <Resource Include="Assets\Block-L.png" />
-    <Resource Include="Assets\Block-O.png" />
-    <Resource Include="Assets\Block-S.png" />
-    <Resource Include="Assets\Block-T.png" />
-    <Resource Include="Assets\Block-Z.png" />
-    <Resource Include="Assets\Icon.ico" />
-    <Resource Include="Assets\TileBlue.png" />
-    <Resource Include="Assets\TileCyan.png" />
-    <Resource Include="Assets\TileEmpty.png" />
-    <Resource Include="Assets\TileGreen.png" />
-    <Resource Include="Assets\TileOrange.png" />
-    <Resource Include="Assets\TilePurple.png" />
-    <Resource Include="Assets\TileRed.png" />
-    <Resource Include="Assets\TileYellow.png" />
+    <Resource Include="View\Assets\Background.png" />
+    <Resource Include="View\Assets\Block-Empty.png" />
+    <Resource Include="View\Assets\Block-I.png" />
+    <Resource Include="View\Assets\Block-J.png" />
+    <Resource Include="View\Assets\Block-L.png" />
+    <Resource Include="View\Assets\Block-O.png" />
+    <Resource Include="View\Assets\Block-S.png" />
+    <Resource Include="View\Assets\Block-T.png" />
+    <Resource Include="View\Assets\Block-Z.png" />
+    <Resource Include="View\Assets\Icon.ico" />
+    <Resource Include="View\Assets\TileBlue.png" />
+    <Resource Include="View\Assets\TileCyan.png" />
+    <Resource Include="View\Assets\TileEmpty.png" />
+    <Resource Include="View\Assets\TileGreen.png" />
+    <Resource Include="View\Assets\TileOrange.png" />
+    <Resource Include="View\Assets\TilePurple.png" />
+    <Resource Include="View\Assets\TileRed.png" />
+    <Resource Include="View\Assets\TileYellow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="View\MainWindow.xaml">
+      <CustomToolNamespace>Tetris</CustomToolNamespace>
+      <Generator></Generator>
+    </Page>
   </ItemGroup>
 
 </Project>

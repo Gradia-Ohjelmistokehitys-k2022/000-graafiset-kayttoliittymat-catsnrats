@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Tetris
 {
     /// <summary>
@@ -18,7 +19,8 @@ namespace Tetris
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();        
+                       
         }
     }
 }
