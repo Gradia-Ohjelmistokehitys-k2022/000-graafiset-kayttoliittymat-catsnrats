@@ -31,6 +31,26 @@ namespace Tetris.Model
             return gridCells[x, y];
         }
 
+        public bool this[int x, int y]
+        {
+            get
+            {
+                if (x < 0 || x >= Width || y < 0 || y >= Height)
+                {
+                    return true;
+                }
+                return gridCells[x, y];
+            }
+            set 
+            {
+                if (x >= 0 && x < Width && y >= 0 && y < Height)
+                {
+                    gridCells[x, y] = value;
+                }
+            }
+
+        }
+
         // metodi asettamaan ruutu varatuksi
         public void SetCellOccupancy(int x, int y, bool occupied)
         {
