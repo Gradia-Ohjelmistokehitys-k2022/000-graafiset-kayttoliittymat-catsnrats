@@ -21,17 +21,24 @@ namespace Tetris.Model
         }
 
         private void InitializeBlocks()
-        {           
+        {   
+            blocks.Clear(); // palikkaputsaus ennen init
             int rows = shape.GetLength(0);
             int cols = shape.GetLength(1);
 
-            for (int i = 0; i < rows; i++)
+            // massan keskipiste
+            int centerX = cols / 2;
+            int centerY = rows / 2;
+
+            for (int y = 0; y < rows; y++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int x = 0; x < cols; x++)
                 {
-                    if (shape[i, j] != 0)
+                    if (shape[y, x] != 0)
                     {
-                        blocks.Add(new Block(i, j)); // Create a block at position (i, j)
+                        int blockX = x - centerX; // palikan positio suhteessa keskustaan
+                        int blockY = y - centerY;
+                        blocks.Add(new Block(blockX, blockY));                        
                     }
                 }
             }
@@ -40,15 +47,19 @@ namespace Tetris.Model
         public int[,] GetShape() 
         {
             return shape;
+        }        
+
+        public Point GetPosition() 
+        {
+            // massan keskipiste
+            double totalX = blocks.Sum(block => block.X);
+            double totalY = blocks.Sum(block => block.Y);
+            double centerX = totalX / blocks.Count;
+            double centerY = totalY / blocks.Count;
+
+            return new Point(centerX, centerY);
         }
 
-        public System.Windows.Point GetPosition() 
-        {
-            // palikoiden sijainti...
-            int minX = blocks.Min(block => block.X);
-            int minY = blocks.Min(block => block.Y);
-            return new System.Windows.Point(minX, minY);
-        }
         public void Move(int deltaX, int deltaY)
         {
             foreach (var block in blocks)
@@ -58,16 +69,16 @@ namespace Tetris.Model
             }
         }
         public void RotateClockwise()
-        {
-            int[,] rotatedShape = new int[shape.GetLength(1), shape.GetLength(0)];
+        {            
             int rows = shape.GetLength(0);
             int cols = shape.GetLength(1);
+            int[,] rotatedShape = new int[cols, rows];
 
-            for (int i = 0; i < rows; i++)
+            for (int y = 0; y < rows; y++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int x = 0; x < cols; x++)
                 {
-                    rotatedShape[j, rows - i - 1] = shape[i, j];
+                    rotatedShape[x, rows - y - 1] = shape[y, x];
                 }
             }
 
@@ -75,16 +86,16 @@ namespace Tetris.Model
             InitializeBlocks();
         }
         public void RotateCounterClockwise()
-        {
-            int[,] rotatedShape = new int[shape.GetLength(1), shape.GetLength(0)];
+        {            
             int rows = shape.GetLength(0);
             int cols = shape.GetLength(1);
+            int[,] rotatedShape = new int[cols, rows];
 
-            for (int i = 0; i < rows; i++)
+            for (int y = 0; y < rows; y++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int x = 0; x < cols; x++)
                 {
-                    rotatedShape[cols - j - 1, i] = shape[i, j];
+                    rotatedShape[cols - x - 1, y] = shape[y, x];
                 }
             }
 

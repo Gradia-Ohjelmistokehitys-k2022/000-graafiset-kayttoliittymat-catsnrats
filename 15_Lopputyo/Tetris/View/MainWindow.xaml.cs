@@ -24,26 +24,26 @@ namespace Tetris
 
         private readonly ImageSource[] tileImages = new ImageSource[]
         {
-            new BitmapImage(new Uri("View/Assets/TileEmpty.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/TileCyan.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/TileBlue.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/TileOrange.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/TileYellow.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/TileGreen.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/TilePurple.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/TileRed.png", UriKind.Relative))
+            new BitmapImage(new Uri("Assets/TileEmpty.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileCyan.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileBlue.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileOrange.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileYellow.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileGreen.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TilePurple.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileRed.png", UriKind.Relative))
         };
 
         private readonly ImageSource[] blockImages = new ImageSource[]
         {
-            new BitmapImage(new Uri("View/Assets/Block-Empty.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/Block-I.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/Block-J.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/Block-L.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/Block-O.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/Block-S.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/Block-T.png", UriKind.Relative)),
-            new BitmapImage(new Uri("View/Assets/Block-Z.png", UriKind.Relative))
+            new BitmapImage(new Uri("Assets/Block-Empty.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-I.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-J.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-L.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-O.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-S.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-T.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-Z.png", UriKind.Relative))
         };
 
         private readonly Image[,] imageControls;        
@@ -76,6 +76,7 @@ namespace Tetris
 
                     // oletuslähde tyhjän ruudun kuvalle
                     image.Source = tileImages[0];
+                    //image.Source = blockImages[1];
 
                     // Image-kontrollin positio ja koko
                     image.Width = 25;
@@ -122,6 +123,9 @@ namespace Tetris
             int[,] shape = block.GetShape();
             Point position = block.GetPosition();
 
+            // putsaa taustan ennen palikan piirtoa
+            GameCanvas.Children.Clear();
+
             for (int y = 0; y < shape.GetLength(0); y++) 
             {
                 for (int x = 0; x < shape.GetLength(1); x++)
@@ -131,11 +135,17 @@ namespace Tetris
                     {
                         // luo kuva-kontrollin ? tetrominolle
                         Image blockImage = new Image();
-                        blockImage.Source = blockImages[shape[y, x]];
+                        //blockImage.Source = blockImages[shape[y, x]];
+                        blockImage.Source = blockImages[3];
 
-                        // asettaa tetrominon position
-                        Canvas.SetLeft(blockImage, (position.X + x) * blockSize);
-                        Canvas.SetTop(blockImage, (position.Y + y) * blockSize);
+                        blockImage.Width = 80;
+                        blockImage.Height = 80;
+
+                        double left = (position.X + x) * blockSize;
+                        double top = (position.Y + y) * blockSize;
+
+                        Canvas.SetLeft(blockImage, left);
+                        Canvas.SetTop(blockImage, top);                        
 
                         // asettaa tetrominon kankaalle
                         GameCanvas.Children.Add(blockImage);
@@ -146,9 +156,10 @@ namespace Tetris
 
         private void Draw(GameState gameState) 
         {
-            DrawGrid(gameState.Grid);
-            DrawBlock(gameState.GetCurrentTetromino());
+            DrawGrid(gameState.Grid);            
+            DrawBlock(gameState.currentTetromino);
         }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {            
             // nykyinen tetromino
@@ -173,6 +184,7 @@ namespace Tetris
             }
             Draw(gameState);            
         }
+
         private void GameCanvas_Loaded(object sender, RoutedEventArgs e)
         { 
             Draw(gameState);            
