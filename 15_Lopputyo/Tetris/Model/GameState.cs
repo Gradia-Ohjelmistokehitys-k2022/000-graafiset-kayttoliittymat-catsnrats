@@ -16,18 +16,36 @@ namespace Tetris.Model
             // alustaa ruudukon
             Grid = new Grid();
 
-            //currentTetromino = new Tetromino(new int[,]
+            currentTetromino = new Tetromino(new int[,] // I-tetron alkupositio
+            {
+                { 0, 0, 0, 0 },
+                { 1, 1, 1, 1 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+            });
+
+            //currentTetromino = new Tetromino(new int[,] // L-tetron alkupositio
             //{
-            //    { 1 },
-            //    { 1 },
-            //    { 1 },
-            //    { 1 }
+            //    { 0, 0, 1, 0 },
+            //    { 1, 1, 1, 0 },
+            //    { 0, 0, 0, 0 },
+            //    { 0, 0, 0, 0 }
             //});
 
-            //currentTetromino = new Tetromino(new int[,]
+            //currentTetromino = new Tetromino(new int[,] // S-tetron alkupositio
             //{
-            //    { 0, 0, 1 },
-            //    { 1, 1, 1 },
+            //    { 0, 0, 0, 0 },
+            //    { 0, 1, 1, 0 },
+            //    { 1, 1, 0, 0 },
+            //    { 0, 0, 0, 0 }
+            //});
+
+            //currentTetromino = new Tetromino(new int[,] // J-tetron alkupositio
+            //{
+            //    { 0, 0, 0, 0 },
+            //    { 1, 0, 0, 0 },
+            //    { 1, 1, 1, 0 },
+            //    { 0, 0, 0, 0 }
             //});
         }
 

@@ -54,6 +54,14 @@ namespace Tetris.Model
             // massan keskipiste
             double totalX = blocks.Sum(block => block.X);
             double totalY = blocks.Sum(block => block.Y);
+
+            //double totalX = 0;
+            //double totalY = 0;
+            foreach (var block in blocks) 
+            {
+                totalX += block.X;
+                totalY += block.Y;
+            }
             double centerX = totalX / blocks.Count;
             double centerY = totalY / blocks.Count;
 
@@ -83,7 +91,7 @@ namespace Tetris.Model
             }
 
             shape = rotatedShape;
-            InitializeBlocks();
+            //InitializeBlocks();
         }
         public void RotateCounterClockwise()
         {            
