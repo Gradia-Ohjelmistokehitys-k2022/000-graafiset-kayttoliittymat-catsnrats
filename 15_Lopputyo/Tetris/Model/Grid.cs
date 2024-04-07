@@ -10,7 +10,7 @@ namespace Tetris.Model
     {
         // muuttujat ruudukon määrittelyyn
         public const int Width = 10;
-        public const int Height = 20;
+        public const int Height = 22;
 
         // 2D-taulukko kuvaamaan ruudukkoa
         private readonly bool[,] gridCells;
@@ -101,6 +101,48 @@ namespace Tetris.Model
                     }
                     y++; // "nykyrivin" uudelleen tarkistus ?
                 }
+            }
+        }
+
+        // Tetrominon liikkumisen rajaamista...
+        // Onko palikka pelialueen sisällä
+        public bool IsWithinBoundaries(int x, int y) 
+        {
+            return x >= 0 && x < Width && y >= 0 && y < Height;
+        }
+
+        // Onko alue tyhjä
+        public bool IsCellEmpty(int x, int y) 
+        {
+            return IsWithinBoundaries(x, y) && !gridCells[x, y];
+        }
+
+        // Voiko Tetromino siirtyä pelaajan liikuttamaan sijaintiin törmäämättä...
+        public bool CanMoveToPosition(Tetromino tetromino, int deltaX, int deltaY) 
+        {
+            foreach (var block in tetromino.blocks)
+            {
+                int newX = block.X + deltaX;
+                int newY = block.Y + deltaY;
+                if (!IsCellEmpty(newX, newY))
+                {
+                    return false; // törmää pelialueen reunaan tai toiseen palikkaan
+                }
+            }
+            return true; // ei törmää
+        }
+
+        // päivittää gridiä pelaajan liikuttaessa pelikoita
+        public void UpdateGrid(Tetromino tetromino) 
+        {
+            foreach (var block in tetromino.blocks)
+            {
+                gridCells[block.X, block.Y] = false;
+            }
+
+            foreach (var block in tetromino.blocks)
+            {
+                gridCells[block.X, block.Y] = true;
             }
         }
     }

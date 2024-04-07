@@ -171,13 +171,25 @@ namespace Tetris
             switch (e.Key)
             {
                 case Key.Left:
-                    currentTetromino.Move(-1, 0); // liike vasemmalle
+                    //currentTetromino.Move(-1, 0); // liike vasemmalle
+                    if (gameState.Grid.CanMoveToPosition(currentTetromino, -1, 0))
+                    {
+                        currentTetromino.Move(-1, 0); // liike vasemmalle
+                    }
                     break;
                 case Key.Right:
                     currentTetromino.Move(1, 0); // oikealle
+                    //if (gameState.Grid.CanMoveToPosition(currentTetromino, 1, 0))
+                    //{
+                    //    currentTetromino.Move(1, 0); // oikealle
+                    //}                    
                     break;
                 case Key.Down:
                     currentTetromino.Move(0, 1); // alaspäin (nopeammin)
+                    //if (gameState.Grid.CanMoveToPosition(currentTetromino, 0, 1))
+                    //{
+                    //    currentTetromino.Move(0, 1); // alaspäin (nopeammin)
+                    //}                    
                     break;
                 case Key.Up: // kääntää tetrominoa myötäpäivään
                     currentTetromino.RotateClockwise();

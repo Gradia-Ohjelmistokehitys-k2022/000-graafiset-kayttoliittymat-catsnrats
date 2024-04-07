@@ -9,9 +9,9 @@ using System.Windows;
 
 namespace Tetris.Model
 {
-    internal class Tetromino
+    public class Tetromino
     {
-        private List<Block> blocks = new List<Block>(); // lista palikoille
+        internal List<Block> blocks = new List<Block>(); // lista palikoille
         private int[,] shape; // palikan muoto
 
         public Tetromino(int[,] shape)
