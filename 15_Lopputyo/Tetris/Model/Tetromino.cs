@@ -26,7 +26,7 @@ namespace Tetris.Model
             int rows = shape.GetLength(0);
             int cols = shape.GetLength(1);
 
-            // massan keskipiste
+            // massan / palikan keskipiste
             int centerX = cols / 2;
             int centerY = rows / 2;
 
@@ -47,26 +47,42 @@ namespace Tetris.Model
         public int[,] GetShape() 
         {
             return shape;
-        }        
+        }
 
-        public Point GetPosition() 
+        //public Point GetPosition() // originaali
+        //{
+        //    // massan keskipiste
+        //    double totalX = blocks.Sum(block => block.X);
+        //    double totalY = blocks.Sum(block => block.Y);
+
+        //    double centerX = totalX / blocks.Count;
+        //    double centerY = totalY / blocks.Count;
+
+        //    return new Point(centerX, centerY);
+        //}
+
+        
+        public Point GetPosition() // säätöyritys X ja Y nollaksi
         {
-            // massan keskipiste
-            double totalX = blocks.Sum(block => block.X);
-            double totalY = blocks.Sum(block => block.Y);
+            // Find the minimum X and Y coordinates among the blocks
+            int minX = blocks.Min(block => block.X);
+            int minY = blocks.Min(block => block.Y);
 
-            //double totalX = 0;
-            //double totalY = 0;
-            foreach (var block in blocks) 
-            {
-                totalX += block.X;
-                totalY += block.Y;
-            }
-            double centerX = totalX / blocks.Count;
-            double centerY = totalY / blocks.Count;
+            // Adjust the positions of the blocks so that the minimum X and Y become zero
+            var adjustedBlocks = blocks.Select(block => new Block(block.X - minX, block.Y - minY));
 
+            // Recalculate the total X and Y coordinates based on the adjusted positions
+            double totalX = adjustedBlocks.Sum(block => block.X);
+            double totalY = adjustedBlocks.Sum(block => block.Y);
+
+            // Calculate the center of mass based on the adjusted positions
+            double centerX = totalX / adjustedBlocks.Count();
+            double centerY = totalY / adjustedBlocks.Count();
+
+            // Return the center of mass as the position
             return new Point(centerX, centerY);
         }
+
 
         public void Move(int deltaX, int deltaY)
         {

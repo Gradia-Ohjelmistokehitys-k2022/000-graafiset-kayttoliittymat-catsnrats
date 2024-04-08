@@ -37,14 +37,14 @@ namespace Tetris
         private readonly ImageSource[] blockImages = new ImageSource[]
         {
             new BitmapImage(new Uri("Assets/Block-Empty.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/TileCyan.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileCyan.png", UriKind.Relative)),                        
             //new BitmapImage(new Uri("Assets/Block-I.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Block-J.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Block-L.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Block-O.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Block-S.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Block-T.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/Block-Z.png", UriKind.Relative))
+            //new BitmapImage(new Uri("Assets/Block-J.png", UriKind.Relative)),
+            //new BitmapImage(new Uri("Assets/Block-L.png", UriKind.Relative)),
+            //new BitmapImage(new Uri("Assets/Block-O.png", UriKind.Relative)),
+            //new BitmapImage(new Uri("Assets/Block-S.png", UriKind.Relative)),
+            //new BitmapImage(new Uri("Assets/Block-T.png", UriKind.Relative)),
+            //new BitmapImage(new Uri("Assets/Block-Z.png", UriKind.Relative))
         };
 
         private readonly Image[,] imageControls;        
@@ -94,9 +94,9 @@ namespace Tetris
             return imageControls;
         }
 
-        private void DrawGrid(Model.Grid grid) 
+        private void DrawGrid(Model.Grid grid) // ALKUPERÄINEN
         {
-            for (int y = 0; y < Model.Grid.Height; y++) 
+            for (int y = 0; y < Model.Grid.Height; y++)
             {
                 for (int x = 0; x < Model.Grid.Width; x++)
                 {
@@ -110,13 +110,13 @@ namespace Tetris
                     {
                         // tee jotain
                     }
-                    else 
+                    else
                     {
                         // if not occupied
                     }
                 }
             }
-        }
+        }     
 
         private void DrawBlock(Tetromino block)
         {         
@@ -126,18 +126,17 @@ namespace Tetris
             // putsaa taustan ennen palikan piirtoa
             GameCanvas.Children.Clear();
 
-            for (int y = 0; y < shape.GetLength(0); y++)
-            //for (int y = 0; y < 4; y++) // 4 x 4 = fixed size
+            for (int y = 0; y < shape.GetLength(0); y++)            
             {
-                for (int x = 0; x < shape.GetLength(1); x++)
-                //for (int x = 0; x < 4; x++)
+                for (int x = 0; x < shape.GetLength(1); x++)                
                 {
                     // onko ruutu varattu?
                     if (shape[y, x] != 0)
                     {
                         // luo kuva-kontrollin ? tetrominolle
                         Image blockImage = new Image();
-                        blockImage.Source = blockImages[shape[y, x]];                       
+                        blockImage.Source = blockImages[shape[y, x]];
+                        //blockImage.Source = blockImages[1];
 
                         blockImage.Width = 25;
                         blockImage.Height = 25;
@@ -178,18 +177,18 @@ namespace Tetris
                     }
                     break;
                 case Key.Right:
-                    currentTetromino.Move(1, 0); // oikealle
-                    //if (gameState.Grid.CanMoveToPosition(currentTetromino, 1, 0))
-                    //{
-                    //    currentTetromino.Move(1, 0); // oikealle
-                    //}                    
+                    // currentTetromino.Move(1, 0); // oikealle
+                    if (gameState.Grid.CanMoveToPosition(currentTetromino, 1, 0))
+                    {
+                        currentTetromino.Move(1, 0); // oikealle
+                    }
                     break;
                 case Key.Down:
                     currentTetromino.Move(0, 1); // alaspäin (nopeammin)
                     //if (gameState.Grid.CanMoveToPosition(currentTetromino, 0, 1))
                     //{
                     //    currentTetromino.Move(0, 1); // alaspäin (nopeammin)
-                    //}                    
+                    //}
                     break;
                 case Key.Up: // kääntää tetrominoa myötäpäivään
                     currentTetromino.RotateClockwise();
