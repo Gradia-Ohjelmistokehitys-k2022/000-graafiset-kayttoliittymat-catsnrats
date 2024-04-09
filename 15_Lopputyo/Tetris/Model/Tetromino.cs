@@ -13,12 +13,12 @@ namespace Tetris.Model
     {
         internal List<Block> blocks = new List<Block>(); // lista palikoille
         private int[,] shape; // palikan muoto
-
-        public Tetromino(int[,] shape)
+        
+        public Tetromino(int[,] shape) // pelkän muodon konstruktori
         {
             this.shape = shape;
             InitializeBlocks();
-        }
+        }       
 
         private void InitializeBlocks()
         {   
@@ -28,7 +28,7 @@ namespace Tetris.Model
 
             // massan / palikan keskipiste
             int centerX = cols / 2;
-            int centerY = rows / 2;
+            int centerY = rows / 2;           
 
             for (int y = 0; y < rows; y++)
             {
@@ -49,40 +49,17 @@ namespace Tetris.Model
             return shape;
         }
 
-        //public Point GetPosition() // originaali
-        //{
-        //    // massan keskipiste
-        //    double totalX = blocks.Sum(block => block.X);
-        //    double totalY = blocks.Sum(block => block.Y);
-
-        //    double centerX = totalX / blocks.Count;
-        //    double centerY = totalY / blocks.Count;
-
-        //    return new Point(centerX, centerY);
-        //}
-
-        
-        public Point GetPosition() // säätöyritys X ja Y nollaksi
+        public Point GetPosition() // originaali
         {
-            // Find the minimum X and Y coordinates among the blocks
-            int minX = blocks.Min(block => block.X);
-            int minY = blocks.Min(block => block.Y);
+            // massan keskipiste
+            double totalX = blocks.Sum(block => block.X + 0.5);
+            double totalY = blocks.Sum(block => block.Y + 0.5);
 
-            // Adjust the positions of the blocks so that the minimum X and Y become zero
-            var adjustedBlocks = blocks.Select(block => new Block(block.X - minX, block.Y - minY));
+            double centerX = totalX / blocks.Count;
+            double centerY = totalY / blocks.Count;
 
-            // Recalculate the total X and Y coordinates based on the adjusted positions
-            double totalX = adjustedBlocks.Sum(block => block.X);
-            double totalY = adjustedBlocks.Sum(block => block.Y);
-
-            // Calculate the center of mass based on the adjusted positions
-            double centerX = totalX / adjustedBlocks.Count();
-            double centerY = totalY / adjustedBlocks.Count();
-
-            // Return the center of mass as the position
             return new Point(centerX, centerY);
-        }
-
+        }      
 
         public void Move(int deltaX, int deltaY)
         {
@@ -132,7 +109,6 @@ internal class Block
 {
     public int X { get; set; }
     public int Y { get; set; }
-
     public Block(int x, int y)
     {
         X = x;

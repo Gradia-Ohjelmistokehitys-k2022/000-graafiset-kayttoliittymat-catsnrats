@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 
 namespace Tetris.Model
 {
@@ -31,7 +32,7 @@ namespace Tetris.Model
             return gridCells[x, y];
         }
 
-        public bool this[int x, int y]
+        public bool this[int x, int y] // indexer
         {
             get
             {
@@ -48,7 +49,6 @@ namespace Tetris.Model
                     gridCells[x, y] = value;
                 }
             }
-
         }
 
         // metodi asettamaan ruutu varatuksi
@@ -119,11 +119,29 @@ namespace Tetris.Model
 
         // Voiko Tetromino siirtyä pelaajan liikuttamaan sijaintiin törmäämättä...
         public bool CanMoveToPosition(Tetromino tetromino, int deltaX, int deltaY) 
-        {
+        {         
+
             foreach (var block in tetromino.blocks)
             {
-                int newX = block.X + deltaX;
-                int newY = block.Y + deltaY;
+                int cols = tetromino.GetShape().GetLength(0);
+                int rows = tetromino.GetShape().GetLength(1);
+
+                // massan / palikan keskipiste
+                int centerX = cols / 2;
+                int centerY = rows / 2;
+                int newX;
+
+                if (deltaX == -1)
+                {
+                    newX = block.X + deltaX + centerX;
+                }
+                else 
+                {
+                    newX = block.X + deltaX + centerX;
+                }
+                    //int newX = block.X + deltaX * centerX;
+                int newY = block.Y + deltaY - centerY;
+
                 if (!IsCellEmpty(newX, newY))
                 {
                     return false; // törmää pelialueen reunaan tai toiseen palikkaan
@@ -135,12 +153,12 @@ namespace Tetris.Model
         // päivittää gridiä pelaajan liikuttaessa pelikoita
         public void UpdateGrid(Tetromino tetromino) 
         {
-            foreach (var block in tetromino.blocks)
+            foreach (var block in tetromino.blocks) // putsaa palikoiden vanhan position
             {
                 gridCells[block.X, block.Y] = false;
             }
 
-            foreach (var block in tetromino.blocks)
+            foreach (var block in tetromino.blocks) // merkkaa uudet positiot
             {
                 gridCells[block.X, block.Y] = true;
             }

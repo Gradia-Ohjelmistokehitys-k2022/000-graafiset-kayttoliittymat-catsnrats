@@ -56,7 +56,7 @@ namespace Tetris
 
             gameState = new GameState();
 
-            // piirtoalueen alustus KESKEN
+            // piirtoalueen alustus
             imageControls = SetupGameCanvas(gameState.Grid);
         }     
 
@@ -81,8 +81,8 @@ namespace Tetris
                     // Image-kontrollin positio ja koko
                     image.Width = 25;
                     image.Height = 25;
-                    Canvas.SetLeft(image, x * 25);
-                    Canvas.SetTop(image, y * 25);
+                    Canvas.SetTop(image, (y - 2) * 25);
+                    Canvas.SetLeft(image, x * 25);                    
 
                     // Image-kontrolli piirtoalueelle
                     GameCanvas.Children.Add(image);
@@ -92,7 +92,7 @@ namespace Tetris
                 }
             }
             return imageControls;
-        }
+        }       
 
         private void DrawGrid(Model.Grid grid) // ALKUPERÄINEN
         {
@@ -116,7 +116,7 @@ namespace Tetris
                     }
                 }
             }
-        }     
+        }
 
         private void DrawBlock(Tetromino block)
         {         
@@ -126,28 +126,25 @@ namespace Tetris
             // putsaa taustan ennen palikan piirtoa
             GameCanvas.Children.Clear();
 
-            for (int y = 0; y < shape.GetLength(0); y++)            
+            for (int y = 0; y < shape.GetLength(0); y++)
             {
-                for (int x = 0; x < shape.GetLength(1); x++)                
+                for (int x = 0; x < shape.GetLength(1); x++)
                 {
                     // onko ruutu varattu?
                     if (shape[y, x] != 0)
                     {
                         // luo kuva-kontrollin ? tetrominolle
                         Image blockImage = new Image();
-                        blockImage.Source = blockImages[shape[y, x]];
-                        //blockImage.Source = blockImages[1];
+                        blockImage.Source = blockImages[shape[y, x]];                        
 
                         blockImage.Width = 25;
-                        blockImage.Height = 25;
-
-                        //blockImage.RenderTransform(Rotation.Rotate90);
+                        blockImage.Height = 25;                        
 
                         double left = (position.X + x) * blockSize;
                         double top = (position.Y + y) * blockSize;
 
                         Canvas.SetLeft(blockImage, left);
-                        Canvas.SetTop(blockImage, top);                        
+                        Canvas.SetTop(blockImage, top);
 
                         // asettaa tetrominon kankaalle
                         GameCanvas.Children.Add(blockImage);
@@ -166,6 +163,7 @@ namespace Tetris
         {            
             // nykyinen tetromino
             Tetromino currentTetromino = gameState.GetCurrentTetromino();
+
             // Tetrominojen liikutteluun näppäimet
             switch (e.Key)
             {
@@ -177,7 +175,7 @@ namespace Tetris
                     }
                     break;
                 case Key.Right:
-                    // currentTetromino.Move(1, 0); // oikealle
+                    //currentTetromino.Move(1, 0); // oikealle
                     if (gameState.Grid.CanMoveToPosition(currentTetromino, 1, 0))
                     {
                         currentTetromino.Move(1, 0); // oikealle
