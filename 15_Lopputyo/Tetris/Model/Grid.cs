@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
+using System.Windows;
 
 namespace Tetris.Model
 {
@@ -11,7 +12,7 @@ namespace Tetris.Model
     {
         // muuttujat ruudukon määrittelyyn
         public const int Width = 10;
-        public const int Height = 22;
+        public const int Height = 20;
 
         // 2D-taulukko kuvaamaan ruudukkoa
         private readonly bool[,] gridCells;
@@ -119,28 +120,51 @@ namespace Tetris.Model
 
         // Voiko Tetromino siirtyä pelaajan liikuttamaan sijaintiin törmäämättä...
         public bool CanMoveToPosition(Tetromino tetromino, int deltaX, int deltaY) 
-        {         
-
+        {           
             foreach (var block in tetromino.blocks)
-            {
+            {            
                 int cols = tetromino.GetShape().GetLength(0);
                 int rows = tetromino.GetShape().GetLength(1);
 
                 // massan / palikan keskipiste
                 int centerX = cols / 2;
                 int centerY = rows / 2;
+
+                //int newX = block.X + deltaX + centerX;
+                //int newY = block.Y + deltaY + centerY;
+
+                // AI-versio sama toiminta kuin alla ?
+
+                //if (newX < 0 || newX >= Grid.Width || newY < 0 || newY >= Grid.Height) 
+                //{
+                //    return false; // The tetromino would go out of bounds
+                //}
+
+                // ########## //
                 int newX;
+                int newY;
 
                 if (deltaX == -1)
                 {
                     newX = block.X + deltaX + centerX;
                 }
-                else 
+                else
                 {
                     newX = block.X + deltaX + centerX;
                 }
-                    //int newX = block.X + deltaX * centerX;
-                int newY = block.Y + deltaY - centerY;
+
+                if (deltaY == -1)
+                {
+                    newY = block.Y + deltaY + centerY;
+                }
+                else
+                {
+                    newY = block.Y + deltaY + centerY;
+                }
+
+                //int newX = block.X + deltaX * centerX; // vanhat intit
+                //int newY = block.Y + deltaY - centerY;
+                // ############//
 
                 if (!IsCellEmpty(newX, newY))
                 {

@@ -182,11 +182,11 @@ namespace Tetris
                     }
                     break;
                 case Key.Down:
-                    currentTetromino.Move(0, 1); // alaspäin (nopeammin)
-                    //if (gameState.Grid.CanMoveToPosition(currentTetromino, 0, 1))
-                    //{
-                    //    currentTetromino.Move(0, 1); // alaspäin (nopeammin)
-                    //}
+                    //currentTetromino.Move(0, 1); // alaspäin (nopeammin)
+                    if (gameState.Grid.CanMoveToPosition(currentTetromino, 0, 1))
+                    {
+                        currentTetromino.Move(0, 1); // alaspäin (nopeammin)
+                    }
                     break;
                 case Key.Up: // kääntää tetrominoa myötäpäivään
                     currentTetromino.RotateClockwise();
