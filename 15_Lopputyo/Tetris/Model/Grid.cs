@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Tetris.Model
     {
         // muuttujat ruudukon määrittelyyn
         public const int Width = 10;
-        public const int Height = 20;
+        public const int Height = 22;
 
         // 2D-taulukko kuvaamaan ruudukkoa
         private readonly bool[,] gridCells;
@@ -120,47 +121,63 @@ namespace Tetris.Model
 
         // Voiko Tetromino siirtyä pelaajan liikuttamaan sijaintiin törmäämättä...
         public bool CanMoveToPosition(Tetromino tetromino, int deltaX, int deltaY) 
-        {           
-            foreach (var block in tetromino.blocks)
-            {            
+        {
+            List<System.Windows.Point> occupiedPositions = tetromino.GetOccupiedPositions();
+
+            //foreach (var block in tetromino.blocks)
+            foreach (var block in occupiedPositions) // debuggaa tätä
+            {
                 int cols = tetromino.GetShape().GetLength(0);
                 int rows = tetromino.GetShape().GetLength(1);
 
-                // massan / palikan keskipiste
-                int centerX = cols / 2;
-                int centerY = rows / 2;
+                //int[,] rotatedShape = tetromino.GetShape();
 
-                //int newX = block.X + deltaX + centerX;
-                //int newY = block.Y + deltaY + centerY;
+                // massan / palikan keskipiste
+                int centerX = (int)(cols / 2);
+                int centerY = (int)(rows / 2);
+
+                //centerY += deltaY > 0 ? 1 : 0;
+
+                //if (deltaY != 0 && tetromino.GetShape() != null)
+                //{                   
+                //    centerY += deltaY > 0 ? -1 : 0;
+                //}
+                //else if (deltaY != 0 && tetromino.GetShape() == rotatedShape)
+                //{
+                //    centerY += deltaY > 0 ? -1 : 0;
+                //}                                               
+
+                int newX = (int)(block.X + deltaX + centerX);
+                int newY = (int)(block.Y + deltaY + centerY);
 
                 // AI-versio sama toiminta kuin alla ?
 
-                //if (newX < 0 || newX >= Grid.Width || newY < 0 || newY >= Grid.Height) 
-                //{
-                //    return false; // The tetromino would go out of bounds
-                //}
+                if (newX < 0 || newX >= Grid.Width || newY < 0 || newY >= Grid.Height)
+                {
+                    return false; // The tetromino would go out of bounds
+                }
 
                 // ########## //
-                int newX;
-                int newY;
+                //int newX;
+                //int newY;
 
-                if (deltaX == -1)
-                {
-                    newX = block.X + deltaX + centerX;
-                }
-                else
-                {
-                    newX = block.X + deltaX + centerX;
-                }
+                //if (deltaX == -1)
+                //{
+                //    newX = block.X + deltaX + centerX;
+                //}
+                //else
+                //{
+                //    newX = block.X + deltaX + centerX;
+                //}
 
-                if (deltaY == -1)
-                {
-                    newY = block.Y + deltaY + centerY;
-                }
-                else
-                {
-                    newY = block.Y + deltaY + centerY;
-                }
+                //if (deltaY == -1)
+                //{
+                //    newY = block.Y + deltaY + centerY;
+                //}
+                //else
+                //{
+                //    newY = block.Y + deltaY + centerY;
+                //}
 
                 //int newX = block.X + deltaX * centerX; // vanhat intit
                 //int newY = block.Y + deltaY - centerY;

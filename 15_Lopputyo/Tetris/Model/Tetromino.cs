@@ -18,7 +18,12 @@ namespace Tetris.Model
         {
             this.shape = shape;
             InitializeBlocks();
-        }       
+        }
+
+        public List<Point> GetOccupiedPositions()
+        {
+            return CalculateOccupiedPositions(shape);
+        }
 
         private void InitializeBlocks()
         {   
@@ -34,7 +39,7 @@ namespace Tetris.Model
             {
                 for (int x = 0; x < cols; x++)
                 {
-                    if (shape[y, x] != 0)
+                    if (shape[x, y] != 0)
                     {
                         int blockX = x - centerX; // palikan positio suhteessa keskustaan
                         int blockY = y - centerY;
@@ -53,7 +58,7 @@ namespace Tetris.Model
         {
             // massan keskipiste
             double totalX = blocks.Sum(block => block.X + 0.5);
-            double totalY = blocks.Sum(block => block.Y + 0.5);
+            double totalY = blocks.Sum(block => block.Y);
 
             double centerX = totalX / blocks.Count;
             double centerY = totalY / blocks.Count;
@@ -69,6 +74,24 @@ namespace Tetris.Model
                 block.Y += deltaY;
             }
         }
+
+        private List<Point> CalculateOccupiedPositions(int[,] shape) // metodi "ykkösten" laskemiseen 4 x 4 tetrotaulukosta
+        {
+            List<Point> positions = new List<Point>();
+            
+            for (int y = 0; y < shape.GetLength(0); y++) 
+            {
+                for (int x = 0; x < shape.GetLength(1); x++)
+                {
+                    if (shape[x, y] == 1) // X ja Y oikein
+                    {
+                        positions.Add(new Point(x, y));
+                    }
+                }
+            }
+            return positions;
+        }
+
         public void RotateClockwise()
         {            
             int rows = shape.GetLength(0);
@@ -101,7 +124,7 @@ namespace Tetris.Model
             }
 
             shape = rotatedShape;
-            InitializeBlocks();
+            //InitializeBlocks();
         }
     }
 }
