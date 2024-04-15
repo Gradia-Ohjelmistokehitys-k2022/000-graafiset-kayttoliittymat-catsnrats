@@ -125,16 +125,16 @@ namespace Tetris.Model
             List<System.Windows.Point> occupiedPositions = tetromino.GetOccupiedPositions();
 
             //foreach (var block in tetromino.blocks)
-            foreach (var block in occupiedPositions) // debuggaa tätä
+            foreach (var block in occupiedPositions)
             {
-                int cols = tetromino.GetShape().GetLength(0);
-                int rows = tetromino.GetShape().GetLength(1);
+                int rows = tetromino.GetShape().GetLength(0);
+                int cols = tetromino.GetShape().GetLength(1);
 
                 //int[,] rotatedShape = tetromino.GetShape();
 
-                // massan / palikan keskipiste
+                // massan / palikan keskipiste suhteessa ylälaitaan
                 int centerX = (int)(cols / 2);
-                int centerY = (int)(rows / 2);
+                int centerY = (int)(rows / 2) - 1;
 
                 //centerY += deltaY > 0 ? 1 : 0;
 
@@ -148,7 +148,19 @@ namespace Tetris.Model
                 //}                                               
 
                 int newX = (int)(block.X + deltaX + centerX);
-                int newY = (int)(block.Y + deltaY + centerY);
+                //int newY = (int)(block.Y + deltaY + centerY);
+
+                // 'newY' uusiksi
+                int newY;
+
+                if (deltaY != 0) 
+                {
+                    newY = (int)(block.Y + deltaY + centerY);
+                }
+                else 
+                {
+                    newY = (int)block.Y; // Y-säilyy muuttumattomana
+                }
 
                 // AI-versio sama toiminta kuin alla ?
 

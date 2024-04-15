@@ -131,11 +131,11 @@ namespace Tetris
                 for (int x = 0; x < shape.GetLength(1); x++)
                 {
                     // onko ruutu varattu?
-                    if (shape[x, y] != 0) // X ja Y OIKEIN ? (y, x ?)
+                    if (shape[y, x] != 0) // y, x oikean muodon alkupos.
                     {
                         // luo kuva-kontrollin ? tetrominolle
                         Image blockImage = new Image();
-                        blockImage.Source = blockImages[shape[x, y]];                        
+                        blockImage.Source = blockImages[shape[y, x]];                        
 
                         blockImage.Width = 25;
                         blockImage.Height = 25;                        
@@ -188,8 +188,8 @@ namespace Tetris
                         currentTetromino.Move(0, 1); // alaspäin (nopeammin)
                     }
                     break;
-                case Key.Up: // kääntää tetrominoa myötäpäivään
-                    currentTetromino.RotateClockwise();
+                case Key.Up: // kääntää tetrominoa myötäpäivään                    
+                     currentTetromino.RotateClockwise();                    
                     break;
                 case Key.Z:
                     currentTetromino.RotateCounterClockwise();
