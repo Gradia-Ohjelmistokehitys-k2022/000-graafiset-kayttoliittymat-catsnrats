@@ -65,7 +65,7 @@ namespace Tetris
             Image[,] imageControls = new Image[Model.Grid.Width, Model.Grid.Height];
 
             // poistaa olemassa olevan piirtoalueen "lapsen" ? :D
-            GameCanvas.Children.Clear();
+            GameCanvas.Children.Clear();            
 
             // looppi iteroi ruudukon solut
             for (int y = 0; y < Model.Grid.Height; y++)
@@ -76,19 +76,19 @@ namespace Tetris
                     Image image = new Image();
 
                     // oletuslähde tyhjän ruudun kuvalle
-                    image.Source = tileImages[0];                    
+                    image.Source = tileImages[4];                    
 
                     // Image-kontrollin positio ja koko
                     image.Width = 25;
                     image.Height = 25;
-                    Canvas.SetTop(image, (y - 2) * 25);
-                    Canvas.SetLeft(image, x * 25);                    
+                    Canvas.SetTop(image, y * 25); // Canvas.SetTop(image, (y - 2) * 25);
+                    Canvas.SetLeft(image, x * 25);
 
                     // Image-kontrolli piirtoalueelle
                     GameCanvas.Children.Add(image);
 
                     // Image-kontrolli -> imageControls-taulukkoon
-                    imageControls[x, y] = image;
+                    imageControls[x, y] = image;                    
                 }
             }
             return imageControls;
@@ -106,14 +106,14 @@ namespace Tetris
                     imageControls[x, y].Source = isOccupied ? blockImages[id] : tileImages[id];
 
                     // isOccupied arvon myöhemmät käsittelyt ?
-                    if (isOccupied)
-                    {
-                        // tee jotain
-                    }
-                    else
-                    {
-                        // if not occupied
-                    }
+                    //if (isOccupied)
+                    //{
+                    //    // tee jotain
+                    //}
+                    //else
+                    //{
+                    //    // if not occupied
+                    //}
                 }
             }
         }
@@ -135,7 +135,7 @@ namespace Tetris
                     {
                         // luo kuva-kontrollin ? tetrominolle
                         Image blockImage = new Image();
-                        blockImage.Source = blockImages[shape[y, x]];                        
+                        blockImage.Source = blockImages[shape[y, x]]; // shape[y, x]                        
 
                         blockImage.Width = 25;
                         blockImage.Height = 25;                        
@@ -168,25 +168,25 @@ namespace Tetris
             switch (e.Key)
             {
                 case Key.Left:
-                    //currentTetromino.Move(-1, 0); // liike vasemmalle
-                    if (gameState.Grid.CanMoveToPosition(currentTetromino, -1, 0))
-                    {
-                        currentTetromino.Move(-1, 0); // liike vasemmalle
-                    }
+                    currentTetromino.Move(-1, 0); // liike vasemmalle
+                    //if (gameState.Grid.CanMoveToPosition(currentTetromino, -1, 0))
+                    //{
+                    //    currentTetromino.Move(-1, 0); // liike vasemmalle
+                    //}
                     break;
                 case Key.Right:
-                    //currentTetromino.Move(1, 0); // oikealle
-                    if (gameState.Grid.CanMoveToPosition(currentTetromino, 1, 0))
-                    {
-                        currentTetromino.Move(1, 0); // oikealle
-                    }
+                    currentTetromino.Move(1, 0); // oikealle
+                    //if (gameState.Grid.CanMoveToPosition(currentTetromino, 1, 0))
+                    //{
+                    //    currentTetromino.Move(1, 0); // oikealle
+                    //}
                     break;
                 case Key.Down:
-                    //currentTetromino.Move(0, 1); // alaspäin (nopeammin)
-                    if (gameState.Grid.CanMoveToPosition(currentTetromino, 0, 1))
-                    {
-                        currentTetromino.Move(0, 1); // alaspäin (nopeammin)
-                    }
+                    currentTetromino.Move(0, 1); // alaspäin (nopeammin)
+                    //if (gameState.Grid.CanMoveToPosition(currentTetromino, 0, 1))
+                    //{
+                    //    currentTetromino.Move(0, 1); // alaspäin (nopeammin)
+                    //}
                     break;
                 case Key.Up: // kääntää tetrominoa myötäpäivään                    
                      currentTetromino.RotateClockwise();                    
