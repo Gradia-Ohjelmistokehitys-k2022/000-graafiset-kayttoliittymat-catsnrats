@@ -57,10 +57,10 @@ namespace Tetris.Model
         public Point GetPosition() // originaali
         {
             // massan keskipiste
-            double totalX = blocks.Sum(block => block.X); // 1
-            double totalY = blocks.Sum(block => block.Y); // 0.5
+            double totalX = blocks.Sum(block => block.X - 1); // +1 (positio gridin aloituskulmaan 0,0) kun gridi *ilmeisesti* piirtyy väärin ?
+            double totalY = blocks.Sum(block => block.Y - 1.5); // +1.5 (positio gridin aloituskulmaan 0,0) kun gridi *ilmeisesti* piirtyy väärin ?
 
-            double centerX = totalX / blocks.Count;
+            double centerX = totalX / blocks.Count; // tetrominon centerX ja centerY yllä olevilla arvoilla gridin yläkulmassa arvoilla -2,-2
             double centerY = totalY / blocks.Count;
 
             return new Point(centerX, centerY);
