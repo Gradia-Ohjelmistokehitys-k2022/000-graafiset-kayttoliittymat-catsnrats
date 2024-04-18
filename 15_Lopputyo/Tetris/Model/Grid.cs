@@ -13,7 +13,7 @@ namespace Tetris.Model
     {
         // muuttujat ruudukon määrittelyyn
         public const int Width = 10;
-        public const int Height = 22;
+        public const int Height = 20;
 
         // 2D-taulukko kuvaamaan ruudukkoa
         private readonly bool[,] gridCells;
@@ -122,10 +122,10 @@ namespace Tetris.Model
         // Voiko Tetromino siirtyä pelaajan liikuttamaan sijaintiin törmäämättä...
         public bool CanMoveToPosition(Tetromino tetromino, int deltaX, int deltaY) 
         {
-            List<System.Windows.Point> occupiedPositions = tetromino.GetOccupiedPositions();
+            //List<System.Windows.Point> occupiedPositions = tetromino.GetOccupiedPositions();
 
-            //foreach (var block in tetromino.blocks)
-            foreach (var block in occupiedPositions)
+            foreach (var block in tetromino.blocks)
+            //foreach (var block in occupiedPositions)
             {
                 int rows = tetromino.GetShape().GetLength(0);
                 int cols = tetromino.GetShape().GetLength(1);
@@ -134,7 +134,7 @@ namespace Tetris.Model
 
                 // massan / palikan keskipiste suhteessa ylälaitaan
                 int centerX = (int)(cols / 2);
-                int centerY = (int)(rows / 2) - 1;
+                int centerY = (int)(rows / 2); // -1 perässä ?
 
                 //centerY += deltaY > 0 ? 1 : 0;
 
@@ -147,20 +147,21 @@ namespace Tetris.Model
                 //    centerY += deltaY > 0 ? -1 : 0;
                 //}                                               
 
+                //int newX = (int)(block.X + deltaX + centerX);
                 int newX = (int)(block.X + deltaX + centerX);
-                //int newY = (int)(block.Y + deltaY + centerY);
+                int newY = (int)(block.Y + deltaY + centerY);
 
                 // 'newY' uusiksi
-                int newY;
+                //int newY;
 
-                if (deltaY != 0) 
-                {
-                    newY = (int)(block.Y + deltaY + centerY);
-                }
-                else 
-                {
-                    newY = (int)block.Y; // Y-säilyy muuttumattomana
-                }
+                //if (deltaY != 0) 
+                //{
+                //    newY = (int)(block.Y + deltaY + centerY);
+                //}
+                //else 
+                //{
+                //    newY = (int)block.Y; // Y-säilyy muuttumattomana
+                //}
 
                 // AI-versio sama toiminta kuin alla ?
 
@@ -195,7 +196,7 @@ namespace Tetris.Model
                 //int newY = block.Y + deltaY - centerY;
                 // ############//
 
-                if (!IsCellEmpty(newX, newY))
+                if (!IsCellEmpty(newX, newY)) // IsCellEmpty ei tod.näk. toimi kuten pitäisi
                 {
                     return false; // törmää pelialueen reunaan tai toiseen palikkaan
                 }

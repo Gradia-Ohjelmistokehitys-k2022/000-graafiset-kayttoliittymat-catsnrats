@@ -83,7 +83,7 @@ namespace Tetris.Model
             {
                 for (int x = 0; x < shape.GetLength(1); x++)
                 {
-                    if (shape[x, y] == 1) // X ja Y oikein
+                    if (shape[y, x] == 1) // X ja Y oikein ? vai Y, X
                     {
                         positions.Add(new Point(x, y));
                     }
