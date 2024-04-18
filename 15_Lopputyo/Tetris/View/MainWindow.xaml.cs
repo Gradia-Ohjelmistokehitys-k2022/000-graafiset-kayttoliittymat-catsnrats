@@ -94,29 +94,29 @@ namespace Tetris
             return imageControls;
         }       
 
-        private void DrawGrid(Model.Grid grid) // ALKUPERÄINEN
-        {
-            for (int y = 0; y < Model.Grid.Height; y++)
-            {
-                for (int x = 0; x < Model.Grid.Width; x++)
-                {
-                    bool isOccupied = grid.IsCellOccupied(x, y); // tarkistaa onko ruutu vapaa / varattu
-                    int id = isOccupied ? 1 : 0; // 1 varatuille ruuduille, 0 vapaille
+        //private void DrawGrid(Model.Grid grid) // ALKUPERÄINEN
+        //{
+        //    for (int y = 0; y < Model.Grid.Height; y++)
+        //    {
+        //        for (int x = 0; x < Model.Grid.Width; x++)
+        //        {
+        //            bool isOccupied = grid.IsCellOccupied(x, y); // tarkistaa onko ruutu vapaa / varattu
+        //            int id = isOccupied ? 1 : 0; // 1 varatuille ruuduille, 0 vapaille
 
-                    imageControls[x, y].Source = isOccupied ? blockImages[id] : tileImages[id];
+        //            imageControls[x, y].Source = isOccupied ? blockImages[id] : tileImages[4];
 
-                    // isOccupied arvon myöhemmät käsittelyt ?
-                    //if (isOccupied)
-                    //{
-                    //    // tee jotain
-                    //}
-                    //else
-                    //{
-                    //    // if not occupied
-                    //}
-                }
-            }
-        }
+        //            // isOccupied arvon myöhemmät käsittelyt ?
+        //            //if (isOccupied)
+        //            //{
+        //            //    // tee jotain
+        //            //}
+        //            //else
+        //            //{
+        //            //    // if not occupied
+        //            //}
+        //        }
+        //    }
+        //}
 
         private void DrawBlock(Tetromino block)
         {         
@@ -155,7 +155,7 @@ namespace Tetris
 
         private void Draw(GameState gameState) 
         {
-            DrawGrid(gameState.Grid);            
+            //DrawGrid(gameState.Grid);            
             DrawBlock(gameState.currentTetromino);
         }
 
