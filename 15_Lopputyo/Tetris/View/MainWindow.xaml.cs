@@ -76,7 +76,7 @@ namespace Tetris
                     Image image = new Image();
 
                     // oletuslähde tyhjän ruudun kuvalle
-                    image.Source = tileImages[4];
+                    image.Source = tileImages[0];
 
                     // Image-kontrollin positio ja koko
                     image.Width = 25;
@@ -103,7 +103,7 @@ namespace Tetris
                     bool isOccupied = grid.IsCellOccupied(x, y); // tarkistaa onko ruutu vapaa / varattu
                     int id = isOccupied ? 1 : 0; // 1 varatuille ruuduille, 0 vapaille
 
-                    imageControls[x, y].Source = isOccupied ? blockImages[id] : tileImages[4];
+                    imageControls[x, y].Source = isOccupied ? blockImages[id] : tileImages[id];
 
                     // isOccupied arvon myöhemmät käsittelyt ?
                     //if (isOccupied)

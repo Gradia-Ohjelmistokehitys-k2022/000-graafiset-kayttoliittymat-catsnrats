@@ -85,7 +85,7 @@ namespace Tetris.Model
                 {
                     if (shape[y, x] == 1) // X ja Y oikein ? vai Y, X
                     {
-                        positions.Add(new Point(x, y));
+                        positions.Add(new Point(y, x));
                     }
                 }
             }

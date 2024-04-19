@@ -32,7 +32,7 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     Background="Black"
-                    Width="300"
+                    Width="325"
                     Height="500"
                     ClipToBounds="True"
                     Loaded="GameCanvas_Loaded"/>

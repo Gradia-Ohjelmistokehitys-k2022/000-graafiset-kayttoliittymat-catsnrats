@@ -15,6 +15,8 @@ namespace Tetris.Model
         public const int Width = 10;
         public const int Height = 20;
 
+        public int i;
+
         // 2D-taulukko kuvaamaan ruudukkoa
         private readonly bool[,] gridCells;
 
@@ -122,19 +124,24 @@ namespace Tetris.Model
         // Voiko Tetromino siirtyä pelaajan liikuttamaan sijaintiin törmäämättä...
         public bool CanMoveToPosition(Tetromino tetromino, int deltaX, int deltaY) 
         {
-            //List<System.Windows.Point> occupiedPositions = tetromino.GetOccupiedPositions();
+            List<System.Windows.Point> occupiedPositions = tetromino.GetOccupiedPositions();
 
-            foreach (var block in tetromino.blocks)
-            //foreach (var block in occupiedPositions)
+            // muuttuja säilyttämään tetrominon X-sijainti
+            int currentX = (int)tetromino.GetPosition().X;            
+            
+            i++;
+
+            //foreach (var block in tetromino.blocks)
+            foreach (var block in occupiedPositions)
             {
                 int rows = tetromino.GetShape().GetLength(0);
-                int cols = tetromino.GetShape().GetLength(1);
+                int cols = tetromino.GetShape().GetLength(1);                
 
                 //int[,] rotatedShape = tetromino.GetShape();
 
                 // massan / palikan keskipiste suhteessa ylälaitaan
-                int centerX = (int)(cols / 2);
-                int centerY = (int)(rows / 2); // -1 perässä ?
+                //int centerX = (int)(cols / 2) - 1;
+                //int centerY = (int)(rows / 2); // -1 perässä ?
 
                 //centerY += deltaY > 0 ? 1 : 0;
 
@@ -145,11 +152,10 @@ namespace Tetris.Model
                 //else if (deltaY != 0 && tetromino.GetShape() == rotatedShape)
                 //{
                 //    centerY += deltaY > 0 ? -1 : 0;
-                //}                                               
-
-                //int newX = (int)(block.X + deltaX + centerX);
-                int newX = (int)(block.X + deltaX + centerX);
-                int newY = (int)(block.Y + deltaY + centerY);
+                //}             
+                
+                int newX = (int)(block.X + currentX);
+                int newY = (int)(block.Y + deltaY);                
 
                 // 'newY' uusiksi
                 //int newY;
