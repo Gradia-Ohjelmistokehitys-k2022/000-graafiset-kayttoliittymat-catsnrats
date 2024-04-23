@@ -17,36 +17,60 @@ namespace Tetris.Model
             // alustaa ruudukon
             Grid = new Grid();
 
-            currentTetromino = new Tetromino(new int[,] // I-tetron alkupositio
+            currentTetromino = new Tetromino(new int[,] // testipalikka
             {
-                { 0, 0, 0, 0 },
-                { 1, 1, 1, 1 },
-                { 0, 0, 0, 0 },
-                { 0, 0, 0, 0 }
-            });            
+                { 0, 1, 0 },
+                { 1, 1, 1 },
+                { 0, 0, 0 }
+            });
 
-            //currentTetromino = new Tetromino(new int[,] // L-tetron alkupositio
+            //currentTetromino = new Tetromino(new int[,] // I-tetron alkupositio
             //{
-            //    { 0, 0, 1, 0 },
-            //    { 1, 1, 1, 0 },
+            //    { 0, 0, 0, 0 },
+            //    { 1, 1, 1, 1 },
             //    { 0, 0, 0, 0 },
             //    { 0, 0, 0, 0 }
             //});
 
-            //currentTetromino = new Tetromino(new int[,] // S-tetron alkupositio
+            //currentTetromino = new Tetromino(new int[,] // L - tetron alkupositio
             //{
-            //    { 0, 0, 0, 0 },
-            //    { 0, 1, 1, 0 },
-            //    { 1, 1, 0, 0 },
-            //    { 0, 0, 0, 0 }
+            //    { 0, 0, 1 },
+            //    { 1, 1, 1 },
+            //    { 0, 0, 0 }                
             //});
 
-            //currentTetromino = new Tetromino(new int[,] // J-tetron alkupositio
+            //currentTetromino = new Tetromino(new int[,] // S - tetron alkupositio
             //{
-            //    { 0, 0, 0, 0 },
-            //    { 1, 0, 0, 0 },
-            //    { 1, 1, 1, 0 },
-            //    { 0, 0, 0, 0 }
+            //    { 0, 1, 1 },
+            //    { 1, 1, 0 },
+            //    { 0, 0, 0 }
+            //});
+
+            //currentTetromino = new Tetromino(new int[,] // J - tetro
+            //{                
+            //    { 1, 0, 0 },
+            //    { 1, 1, 1 },
+            //    { 0, 0, 0 }
+            //});
+
+            //currentTetromino = new Tetromino(new int[,] // Z - tetro
+            //{
+            //    { 1, 1, 0 },
+            //    { 0, 1, 1 },
+            //    { 0, 0, 0 }
+            //});
+
+            //currentTetromino = new Tetromino(new int[,] // T - tetro
+            //{
+            //    { 0, 1, 0 },
+            //    { 1, 1, 1 },
+            //    { 0, 0, 0 }
+            //});
+
+            //currentTetromino = new Tetromino(new int[,] // O - tetro
+            //{
+            //    { 1, 1 },
+            //    { 1, 1 }                
             //});
         }
 

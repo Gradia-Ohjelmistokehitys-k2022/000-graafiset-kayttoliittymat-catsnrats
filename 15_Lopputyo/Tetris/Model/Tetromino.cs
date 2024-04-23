@@ -57,7 +57,7 @@ namespace Tetris.Model
         public Point GetPosition() // originaali
         {
             // massan keskipiste
-            double totalX = blocks.Sum(block => block.X + 1); // +1 
+            double totalX = blocks.Sum(block => block.X + 4); // +1 
             double totalY = blocks.Sum(block => block.Y + 0.5); // +0.5 
 
             double centerX = totalX / blocks.Count;
