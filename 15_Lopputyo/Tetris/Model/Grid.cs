@@ -124,90 +124,118 @@ namespace Tetris.Model
         // Voiko Tetromino siirtyä pelaajan liikuttamaan sijaintiin törmäämättä...
         public bool CanMoveToPosition(Tetromino tetromino, int deltaX, int deltaY) 
         {
-            List<System.Windows.Point> occupiedPositions = tetromino.GetOccupiedPositions();
+            System.Windows.Point currentPosition = tetromino.GetPosition();
+            int[,] shape = tetromino.GetShape();            
 
-            // muuttuja säilyttämään tetrominon X-sijainti
-            int currentX = (int)tetromino.GetPosition().X;            
-            
-            i++;
-
-            //foreach (var block in tetromino.blocks)
-            foreach (var block in occupiedPositions)
+            for (int y = 0; y < shape.GetLength(0); y++)
             {
-                int rows = tetromino.GetShape().GetLength(0);
-                int cols = tetromino.GetShape().GetLength(1);                
-
-                //int[,] rotatedShape = tetromino.GetShape();
-
-                // massan / palikan keskipiste suhteessa ylälaitaan
-                //int centerX = (int)(cols / 2) - 1;
-                //int centerY = (int)(rows / 2); // -1 perässä ?
-
-                //centerY += deltaY > 0 ? 1 : 0;
-
-                //if (deltaY != 0 && tetromino.GetShape() != null)
-                //{                   
-                //    centerY += deltaY > 0 ? -1 : 0;
-                //}
-                //else if (deltaY != 0 && tetromino.GetShape() == rotatedShape)
-                //{
-                //    centerY += deltaY > 0 ? -1 : 0;
-                //}             
-                
-                int newX = (int)(block.X + currentX);
-                int newY = (int)(block.Y + deltaY);                
-
-                // 'newY' uusiksi
-                //int newY;
-
-                //if (deltaY != 0) 
-                //{
-                //    newY = (int)(block.Y + deltaY + centerY);
-                //}
-                //else 
-                //{
-                //    newY = (int)block.Y; // Y-säilyy muuttumattomana
-                //}
-
-                // AI-versio sama toiminta kuin alla ?
-
-                if (newX < 0 || newX >= Grid.Width || newY < 0 || newY >= Grid.Height)
+                for (int x = 0; x < shape.GetLength(1); x++)
                 {
-                    return false; // The tetromino would go out of bounds
-                }
+                    if (shape[y, x] == 1)
+                    {
+                        int newX = (int)currentPosition.X + x + deltaX;
+                        int newY = (int)currentPosition.Y + y + deltaY;
 
-                // ########## //
-                //int newX;
-                //int newY;
+                        if (newX < 0 || newX >= Grid.Width || newY < 0 || newY >= Grid.Height)
+                        {
+                            return false;
+                        }
 
-                //if (deltaX == -1)
-                //{
-                //    newX = block.X + deltaX + centerX;
-                //}
-                //else
-                //{
-                //    newX = block.X + deltaX + centerX;
-                //}
-
-                //if (deltaY == -1)
-                //{
-                //    newY = block.Y + deltaY + centerY;
-                //}
-                //else
-                //{
-                //    newY = block.Y + deltaY + centerY;
-                //}
-
-                //int newX = block.X + deltaX * centerX; // vanhat intit
-                //int newY = block.Y + deltaY - centerY;
-                // ############//
-
-                if (!IsCellEmpty(newX, newY)) // IsCellEmpty ei tod.näk. toimi kuten pitäisi
-                {
-                    return false; // törmää pelialueen reunaan tai toiseen palikkaan
+                        if (!IsCellEmpty(newX, newY)) // IsCellEmpty ei tod.näk. toimi kuten pitäisi
+                        {
+                            return false; // törmää pelialueen reunaan tai toiseen palikkaan
+                        }
+                    }              
                 }
             }
-            return true; // ei törmää
+            return true;
+
+            // muuttuja säilyttämään tetrominon X-sijainti
+            //int currentX = (int)tetromino.GetPosition().X;
+            //int currentY = (int)tetromino.GetPosition().Y;
+
+            //int newX = 0;
+            //int newY = 0;
+
+            //i++;
+
+            ////foreach (var block in tetromino.blocks)
+            //foreach (var block in occupiedPositions)
+            //{
+            //    //int rows = tetromino.GetShape().GetLength(0);
+            //    //int cols = tetromino.GetShape().GetLength(1);                
+
+            //    // massan / palikan keskipiste suhteessa ylälaitaan
+            //    //int centerX = (int)(cols / 2) - 1;
+            //    //int centerY = (int)(rows / 2); // -1 perässä ?
+
+            //    //centerY += deltaY > 0 ? 1 : 0;
+
+            //    //if (deltaY != 0 && tetromino.GetShape() != null)
+            //    //{                   
+            //    //    centerY += deltaY > 0 ? -1 : 0;
+            //    //}
+            //    //else if (deltaY != 0 && tetromino.GetShape() == rotatedShape)
+            //    //{
+            //    //    centerY += deltaY > 0 ? -1 : 0;
+            //    //}             
+
+            //    //int newX = (int)(block.X + deltaX);
+
+            //    newX = (int)(block.X + currentX + deltaX);
+
+            //    newY = (int)(block.Y + currentY + deltaY);
+
+
+            //    //int newX = (int)(currentX + deltaX);
+
+            //    //int newY = (int)(currentY + deltaY);
+
+
+            //    //if (newY < 0 || newY >= Grid.Width)
+            //    //{
+            //    //    return false;
+            //    //}
+
+            //    // AI-versio sama toiminta kuin alla ?
+
+            //    if (newX < 0 || newX >= Grid.Width || newY < 0 || newY >= Grid.Height)
+            //    {
+            //        return false; // The tetromino would go out of bounds
+            //    }
+
+            //    // ########## //
+            //    //int newX;
+            //    //int newY;
+
+            //    //if (deltaX == -1)
+            //    //{
+            //    //    newX = block.X + deltaX + centerX;
+            //    //}
+            //    //else
+            //    //{
+            //    //    newX = block.X + deltaX + centerX;
+            //    //}
+
+            //    //if (deltaY == -1)
+            //    //{
+            //    //    newY = block.Y + deltaY + centerY;
+            //    //}
+            //    //else
+            //    //{
+            //    //    newY = block.Y + deltaY + centerY;
+            //    //}
+
+            //    //int newX = block.X + deltaX * centerX; // vanhat intit
+            //    //int newY = block.Y + deltaY - centerY;
+            //    // ############//
+
+            //    if (!IsCellEmpty(newX, newY)) // IsCellEmpty ei tod.näk. toimi kuten pitäisi
+            //    {
+            //        return false; // törmää pelialueen reunaan tai toiseen palikkaan
+            //    }
+            //}
+            //return true; // ei törmää
         }
 
         // päivittää gridiä pelaajan liikuttaessa pelikoita
