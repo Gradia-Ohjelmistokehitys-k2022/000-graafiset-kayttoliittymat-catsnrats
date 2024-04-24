@@ -18,12 +18,7 @@ namespace Tetris.Model
         {
             this.shape = shape;
             InitializeBlocks();
-        }
-
-        public List<Point> GetOccupiedPositions()
-        {
-            return CalculateOccupiedPositions(shape);
-        }
+        }        
 
         private void InitializeBlocks()
         {   
@@ -32,8 +27,8 @@ namespace Tetris.Model
             int cols = shape.GetLength(1);
 
             // massan / palikan keskipiste
-            int centerX = cols / 2;
-            int centerY = rows / 2;           
+            int centerY = cols / 2;
+            int centerX = rows / 2;           
 
             for (int y = 0; y < rows; y++)
             {
@@ -57,11 +52,11 @@ namespace Tetris.Model
         public Point GetPosition() // originaali
         {
             // massan keskipiste
-            double totalX = blocks.Sum(block => block.X + 4); // +1 
-            double totalY = blocks.Sum(block => block.Y + 0.5); // +0.5 
+            int totalX = blocks.Sum(block => block.X + 1); // +1 
+            int totalY = blocks.Sum(block => block.Y); // +0.5 
 
-            double centerX = totalX / blocks.Count;
-            double centerY = totalY / blocks.Count;
+            int centerX = totalX / blocks.Count;
+            int centerY = totalY / blocks.Count;
 
             return new Point(centerX, centerY);
         }      
@@ -73,24 +68,7 @@ namespace Tetris.Model
                 block.X += deltaX;
                 block.Y += deltaY;
             }
-        }
-
-        private List<Point> CalculateOccupiedPositions(int[,] shape) // metodi "ykkösten" laskemiseen 4 x 4 tetrotaulukosta
-        {
-            List<Point> positions = new List<Point>();
-            
-            for (int y = 0; y < shape.GetLength(0); y++) 
-            {
-                for (int x = 0; x < shape.GetLength(1); x++)
-                {
-                    if (shape[y, x] == 1) // X ja Y oikein ? vai Y, X
-                    {
-                        positions.Add(new Point(y, x));
-                    }
-                }
-            }
-            return positions;
-        }
+        }        
 
         public void RotateClockwise()
         {            
@@ -105,9 +83,7 @@ namespace Tetris.Model
                     rotatedShape[x, rows - y - 1] = shape[y, x];
                 }
             }
-
-            shape = rotatedShape;
-            //InitializeBlocks();
+            shape = rotatedShape;           
         }
         public void RotateCounterClockwise()
         {            
@@ -122,9 +98,7 @@ namespace Tetris.Model
                     rotatedShape[cols - x - 1, y] = shape[y, x];
                 }
             }
-
-            shape = rotatedShape;
-            //InitializeBlocks();
+            shape = rotatedShape;            
         }
     }
 }

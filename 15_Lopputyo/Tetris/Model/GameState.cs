@@ -19,8 +19,8 @@ namespace Tetris.Model
 
             currentTetromino = new Tetromino(new int[,] // testipalikka
             {
-                { 0, 1, 0 },
-                { 1, 1, 1 },
+                { 1, 1, 0 },
+                { 0, 1, 1 },
                 { 0, 0, 0 }
             });
 
@@ -70,7 +70,7 @@ namespace Tetris.Model
             //currentTetromino = new Tetromino(new int[,] // O - tetro
             //{
             //    { 1, 1 },
-            //    { 1, 1 }                
+            //    { 1, 1 }
             //});
         }
 
