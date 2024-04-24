@@ -17,10 +17,10 @@ namespace Tetris.Model
             // alustaa ruudukon
             Grid = new Grid();
 
-            currentTetromino = new Tetromino(new int[,] // testipalikka
+            currentTetromino = new Tetromino(new int[,] // FOR TESTING
             {
-                { 1, 1, 0 },
-                { 0, 1, 1 },
+                { 0, 1, 0 },
+                { 1, 1, 1 },
                 { 0, 0, 0 }
             });
 

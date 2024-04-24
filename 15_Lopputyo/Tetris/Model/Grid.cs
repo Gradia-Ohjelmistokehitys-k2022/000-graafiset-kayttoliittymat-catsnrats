@@ -13,11 +13,9 @@ namespace Tetris.Model
     {
         // muuttujat ruudukon määrittelyyn
         public const int Width = 10;
-        public const int Height = 20;
+        public const int Height = 20;       
 
-        public int i;
-
-        // 2D-taulukko kuvaamaan ruudukkoa
+        // 2D-taulukko kuvaamaan taustan ruudukkoa
         private readonly bool[,] gridCells;
 
         public Grid() 

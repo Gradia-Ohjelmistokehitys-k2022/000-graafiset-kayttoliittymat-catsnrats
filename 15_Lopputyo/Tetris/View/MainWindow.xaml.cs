@@ -36,7 +36,7 @@ namespace Tetris
 
         private readonly ImageSource[] blockImages = new ImageSource[]
         {
-            new BitmapImage(new Uri("Assets/Block-Empty.png", UriKind.Relative)),
+            //new BitmapImage(new Uri("Assets/Block-Empty.png", UriKind.Relative)),
             new BitmapImage(new Uri("Assets/TileCyan.png", UriKind.Relative)),
             new BitmapImage(new Uri("Assets/TileBlue.png", UriKind.Relative)),
             new BitmapImage(new Uri("Assets/TileOrange.png", UriKind.Relative)),
@@ -46,7 +46,30 @@ namespace Tetris
             new BitmapImage(new Uri("Assets/TileRed.png", UriKind.Relative))
         };
 
-        private readonly Image[,] imageControls;        
+        private readonly Image[,] imageControls;
+
+        // Define the TetrominoShape enum
+        public enum TetrominoShape
+        {            
+            I,
+            J,
+            L,
+            O,
+            S,
+            T,
+            Z
+        }
+
+        private readonly Dictionary<TetrominoShape, int> shapeImageMap = new Dictionary<TetrominoShape, int>
+        {
+            { TetrominoShape.I, 0 },
+            { TetrominoShape.J, 1 },
+            { TetrominoShape.L, 2 },
+            { TetrominoShape.O, 3 },
+            { TetrominoShape.S, 4 },
+            { TetrominoShape.T, 5 },
+            { TetrominoShape.Z, 6 }
+        };
 
         private const int blockSize = 25;
         public MainWindow()
@@ -129,16 +152,20 @@ namespace Tetris
             {
                 for (int x = 0; x < shape.GetLength(1); x++)
                 {
-                    // onko ruutu varattu?
-                    if (shape[y, x] != 0) // y, x oikean muodon alkupos.
+                    int shapeValue = shape[y, x];
+                    if (shapeValue >= 0) // y, x oikean muodon alkupos.
                     {
+                        TetrominoShape tetrominoShape = (TetrominoShape)shapeValue;
+                        int imageIndex = shapeImageMap[tetrominoShape];
                         // luo kuva-kontrollin ? tetrominolle
                         Image blockImage = new Image();
-                        blockImage.Source = blockImages[shape[y, x]]; // shape[y, x]
-                        //blockImage.Source = blockImages[4];
+                        blockImage.Source = blockImages[imageIndex];
+                        //TetrominoShape tetrominoShape = block.GetShape();
+                        //int imageIndex = shapeImageMap[tetrominoShape];
+                        //blockImage.Source = blockImages[shape[y, x]]; // shape[y, x]                        
 
-                        blockImage.Width = 25;
-                        blockImage.Height = 25;                        
+                        blockImage.Width = blockSize;
+                        blockImage.Height = blockSize;                        
 
                         double left = (position.X + x) * blockSize;
                         double top = (position.Y + y) * blockSize;
