@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
+using static Tetris.MainWindow;
 
 namespace Tetris.Model
 {
@@ -12,66 +13,102 @@ namespace Tetris.Model
         public Tetromino currentTetromino;
         public Grid Grid { get; private set; }
 
+        // Define tetromino shapes as arrays of integers
+        private readonly int[][][] tetrominoShapes = new int[][][]
+        {
+            // I
+            new int[][]
+            {
+                new int[] { 0, 0, 0, 0 },
+                new int[] { 1, 1, 1, 1 },
+                new int[] { 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0 }
+            },
+
+            // J
+            new int[][]
+            {
+                new int[] { 0, 0, 1 },
+                new int[] { 1, 1, 1 },
+                new int[] { 0, 0, 0 }
+            },
+
+            // L
+            new int[][]
+            {
+                new int[] { 1, 0, 0 },
+                new int[] { 1, 1, 1 },
+                new int[] { 0, 0, 0 }
+            },
+
+            // O
+            new int[][]
+            {
+                new int[] { 1, 1 },
+                new int[] { 1, 1 }
+            },
+
+            // S
+            new int[][]
+            {
+                new int[] { 0, 1, 1 },
+                new int[] { 1, 1, 0 },
+                new int[] { 0, 0, 0 }
+            },
+
+            // T
+            new int[][]
+            {
+                new int[] { 0, 1, 0 },
+                new int[] { 1, 1, 1 },
+                new int[] { 0, 0, 0 }
+            },
+
+            // Z
+            new int[][]
+            {
+                new int[] { 1, 1, 0 },
+                new int[] { 0, 1, 1 },
+                new int[] { 0, 0, 0 }
+            }
+        };
+
+        // Define block images corresponding to each tetromino shape
+        private readonly string[] blockImages = new string[]
+        {
+            "Assets/Block-Empty.png", // 0-ruuduille
+            "Assets/TileCyan.png",   // I
+            "Assets/TileBlue.png",   // J
+            "Assets/TileOrange.png", // L
+            "Assets/TileYellow.png", // O
+            "Assets/TileGreen.png",  // S
+            "Assets/TilePurple.png", // T
+            "Assets/TileRed.png"     // Z
+        };
+
         public GameState()
         {
             // alustaa ruudukon
             Grid = new Grid();
 
-            currentTetromino = new Tetromino(new int[,] // FOR TESTING
+            int[][] tetrominoShapeJagged = tetrominoShapes[5];
+            int[,] tetrominoShape = new int[tetrominoShapeJagged.Length, tetrominoShapeJagged[0].Length];
+
+            for (int i = 0; i < tetrominoShapeJagged.Length; i++)
             {
-                { 0, 1, 0 },
-                { 1, 1, 1 },
-                { 0, 0, 0 }
-            });
+                for (int j = 0; j < tetrominoShapeJagged[0].Length; j++)
+                {
+                    tetrominoShape[i, j] = tetrominoShapeJagged[i][j];
+                }
+            }
 
-            //currentTetromino = new Tetromino(new int[,] // I-tetron alkupositio
-            //{
-            //    { 0, 0, 0, 0 },
-            //    { 1, 1, 1, 1 },
-            //    { 0, 0, 0, 0 },
-            //    { 0, 0, 0, 0 }
-            //});
+            // Set the current tetromino to the I tetromino
+            currentTetromino = new Tetromino(tetrominoShape);            
+        }
 
-            //currentTetromino = new Tetromino(new int[,] // L - tetron alkupositio
-            //{
-            //    { 0, 0, 1 },
-            //    { 1, 1, 1 },
-            //    { 0, 0, 0 }                
-            //});
-
-            //currentTetromino = new Tetromino(new int[,] // S - tetron alkupositio
-            //{
-            //    { 0, 1, 1 },
-            //    { 1, 1, 0 },
-            //    { 0, 0, 0 }
-            //});
-
-            //currentTetromino = new Tetromino(new int[,] // J - tetro
-            //{                
-            //    { 1, 0, 0 },
-            //    { 1, 1, 1 },
-            //    { 0, 0, 0 }
-            //});
-
-            //currentTetromino = new Tetromino(new int[,] // Z - tetro
-            //{
-            //    { 1, 1, 0 },
-            //    { 0, 1, 1 },
-            //    { 0, 0, 0 }
-            //});
-
-            //currentTetromino = new Tetromino(new int[,] // T - tetro
-            //{
-            //    { 0, 1, 0 },
-            //    { 1, 1, 1 },
-            //    { 0, 0, 0 }
-            //});
-
-            //currentTetromino = new Tetromino(new int[,] // O - tetro
-            //{
-            //    { 1, 1 },
-            //    { 1, 1 }
-            //});
+        public string GetBlockImage(TetrominoShape shape)
+        {
+            return blockImages[(int)shape];
         }
 
         public Tetromino GetCurrentTetromino() 
@@ -79,4 +116,14 @@ namespace Tetris.Model
             return currentTetromino;
         }        
     }
-}
+
+    public enum TetrominoShape
+    {
+        I,
+        J,
+        L,
+        O,
+        S,
+        T,
+        Z
+    }}

@@ -24,52 +24,10 @@ namespace Tetris
 
         private readonly ImageSource[] tileImages = new ImageSource[]
         {
-            new BitmapImage(new Uri("Assets/TileEmpty.png", UriKind.Relative))
-            //new BitmapImage(new Uri("Assets/TileCyan.png", UriKind.Relative)),
-            //new BitmapImage(new Uri("Assets/TileBlue.png", UriKind.Relative)),
-            //new BitmapImage(new Uri("Assets/TileOrange.png", UriKind.Relative)),
-            //new BitmapImage(new Uri("Assets/TileYellow.png", UriKind.Relative)),
-            //new BitmapImage(new Uri("Assets/TileGreen.png", UriKind.Relative)),
-            //new BitmapImage(new Uri("Assets/TilePurple.png", UriKind.Relative)),
-            //new BitmapImage(new Uri("Assets/TileRed.png", UriKind.Relative))
-        };
+            new BitmapImage(new Uri("Assets/TileEmpty.png", UriKind.Relative)),           
+        };        
 
-        private readonly ImageSource[] blockImages = new ImageSource[]
-        {
-            //new BitmapImage(new Uri("Assets/Block-Empty.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/TileCyan.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/TileBlue.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/TileOrange.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/TileYellow.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/TileGreen.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/TilePurple.png", UriKind.Relative)),
-            new BitmapImage(new Uri("Assets/TileRed.png", UriKind.Relative))
-        };
-
-        private readonly Image[,] imageControls;
-
-        // Define the TetrominoShape enum
-        public enum TetrominoShape
-        {            
-            I,
-            J,
-            L,
-            O,
-            S,
-            T,
-            Z
-        }
-
-        private readonly Dictionary<TetrominoShape, int> shapeImageMap = new Dictionary<TetrominoShape, int>
-        {
-            { TetrominoShape.I, 0 },
-            { TetrominoShape.J, 1 },
-            { TetrominoShape.L, 2 },
-            { TetrominoShape.O, 3 },
-            { TetrominoShape.S, 4 },
-            { TetrominoShape.T, 5 },
-            { TetrominoShape.Z, 6 }
-        };
+        private readonly Image[,] imageControls;  
 
         private const int blockSize = 25;
         public MainWindow()
@@ -125,7 +83,7 @@ namespace Tetris
                     bool isOccupied = grid.IsCellOccupied(x, y); // tarkistaa onko ruutu vapaa / varattu
                     int id = isOccupied ? 1 : 0; // 1 varatuille ruuduille, 0 vapaille
 
-                    imageControls[x, y].Source = isOccupied ? blockImages[id] : tileImages[id];
+                    //imageControls[x, y].Source = isOccupied ? blockImages[id] : tileImages[id];
 
                     // isOccupied arvon myöhemmät käsittelyt ?
                     //if (isOccupied)
@@ -155,14 +113,12 @@ namespace Tetris
                     int shapeValue = shape[y, x];
                     if (shapeValue >= 0) // y, x oikean muodon alkupos.
                     {
-                        TetrominoShape tetrominoShape = (TetrominoShape)shapeValue;
-                        int imageIndex = shapeImageMap[tetrominoShape];
+                        // kuva tetron muodon perusteella
+                        string blockImageSource = gameState.GetBlockImage((TetrominoShape)shapeValue);
+                        
                         // luo kuva-kontrollin ? tetrominolle
-                        Image blockImage = new Image();
-                        blockImage.Source = blockImages[imageIndex];
-                        //TetrominoShape tetrominoShape = block.GetShape();
-                        //int imageIndex = shapeImageMap[tetrominoShape];
-                        //blockImage.Source = blockImages[shape[y, x]]; // shape[y, x]                        
+                        Image blockImage = new Image();                        
+                        blockImage.Source = new BitmapImage(new Uri(blockImageSource, UriKind.Relative)); // shape[y, x]                        
 
                         blockImage.Width = blockSize;
                         blockImage.Height = blockSize;                        
