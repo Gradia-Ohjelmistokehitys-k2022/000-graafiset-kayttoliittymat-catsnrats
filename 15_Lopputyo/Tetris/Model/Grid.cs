@@ -129,7 +129,7 @@ namespace Tetris.Model
             {
                 for (int x = 0; x < shape.GetLength(1); x++)
                 {
-                    if (shape[y, x] == 1)
+                    if (shape[y, x] != 0)
                     {
                         int newX = (int)currentPosition.X + x + deltaX;
                         int newY = (int)currentPosition.Y + y + deltaY;

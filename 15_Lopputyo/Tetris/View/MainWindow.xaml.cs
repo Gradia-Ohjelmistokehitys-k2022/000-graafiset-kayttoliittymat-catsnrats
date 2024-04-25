@@ -111,14 +111,14 @@ namespace Tetris
                 for (int x = 0; x < shape.GetLength(1); x++)
                 {
                     int shapeValue = shape[y, x];
-                    if (shapeValue >= 0) // y, x oikean muodon alkupos.
+                    if (shapeValue >= 0 && shapeValue < gameState.blockImages.Length) // y, x oikean muodon alkupos.
                     {
-                        // kuva tetron muodon perusteella
-                        string blockImageSource = gameState.GetBlockImage((TetrominoShape)shapeValue);
-                        
+                        // kuva tetron varatuille ruuduille                        
+                        string blockImageSource = gameState.blockImages[shapeValue];
+
                         // luo kuva-kontrollin ? tetrominolle
                         Image blockImage = new Image();                        
-                        blockImage.Source = new BitmapImage(new Uri(blockImageSource, UriKind.Relative)); // shape[y, x]                        
+                        blockImage.Source = new BitmapImage(new Uri(blockImageSource, UriKind.Relative));                    
 
                         blockImage.Width = blockSize;
                         blockImage.Height = blockSize;                        

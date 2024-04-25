@@ -15,8 +15,8 @@ namespace Tetris.Model
 
         // Define tetromino shapes as arrays of integers
         private readonly int[][][] tetrominoShapes = new int[][][]
-        {
-            // I
+        {            
+            // 0 / I
             new int[][]
             {
                 new int[] { 0, 0, 0, 0 },
@@ -25,58 +25,58 @@ namespace Tetris.Model
                 new int[] { 0, 0, 0, 0 }
             },
 
-            // J
+            // 1 / J
             new int[][]
             {
-                new int[] { 0, 0, 1 },
-                new int[] { 1, 1, 1 },
+                new int[] { 2, 0, 0 },
+                new int[] { 2, 2, 2 },
                 new int[] { 0, 0, 0 }
             },
 
-            // L
+            // 2 / L
             new int[][]
             {
-                new int[] { 1, 0, 0 },
-                new int[] { 1, 1, 1 },
+                new int[] { 0, 0, 3 },
+                new int[] { 3, 3, 3 },
                 new int[] { 0, 0, 0 }
             },
 
-            // O
+            // 3 / O
             new int[][]
             {
-                new int[] { 1, 1 },
-                new int[] { 1, 1 }
+                new int[] { 4, 4 },
+                new int[] { 4, 4 }
             },
 
-            // S
+            // 4 / S
             new int[][]
             {
-                new int[] { 0, 1, 1 },
-                new int[] { 1, 1, 0 },
+                new int[] { 0, 5, 5 },
+                new int[] { 5, 5, 0 },
                 new int[] { 0, 0, 0 }
             },
 
-            // T
+            // 5 / T
             new int[][]
             {
-                new int[] { 0, 1, 0 },
-                new int[] { 1, 1, 1 },
+                new int[] { 0, 6, 0 },
+                new int[] { 6, 6, 6 },
                 new int[] { 0, 0, 0 }
             },
 
-            // Z
+            // 6 / Z
             new int[][]
             {
-                new int[] { 1, 1, 0 },
-                new int[] { 0, 1, 1 },
+                new int[] { 7, 7, 0 },
+                new int[] { 0, 7, 7 },
                 new int[] { 0, 0, 0 }
             }
         };
 
         // Define block images corresponding to each tetromino shape
-        private readonly string[] blockImages = new string[]
+        public readonly string[] blockImages = new string[]
         {
-            "Assets/Block-Empty.png", // 0-ruuduille
+            "Assets/Block-Empty.png", // 0 - ruuduille
             "Assets/TileCyan.png",   // I
             "Assets/TileBlue.png",   // J
             "Assets/TileOrange.png", // L
@@ -91,7 +91,7 @@ namespace Tetris.Model
             // alustaa ruudukon
             Grid = new Grid();
 
-            int[][] tetrominoShapeJagged = tetrominoShapes[5];
+            int[][] tetrominoShapeJagged = tetrominoShapes[0];
             int[,] tetrominoShape = new int[tetrominoShapeJagged.Length, tetrominoShapeJagged[0].Length];
 
             for (int i = 0; i < tetrominoShapeJagged.Length; i++)
