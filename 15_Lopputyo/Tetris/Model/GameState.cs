@@ -11,7 +11,7 @@ namespace Tetris.Model
 {
     public class GameState
     {
-        public Tetromino currentTetromino;
+        public Tetromino? currentTetromino;
         public Grid Grid { get; private set; }
 
         public GameState? gameState;        
@@ -95,7 +95,26 @@ namespace Tetris.Model
             // alustaa ruudukon
             Grid = new Grid();
 
-            int[][] tetrominoShapeJagged = tetrominoShapes[4];
+            GenerateNewTetromino();
+            this.mainWindow = mainWindow;
+        }
+
+        public string GetBlockImage(TetrominoShape shape)
+        {
+            return blockImages[(int)shape];
+        }
+
+        #pragma warning disable CS8603 // varoituksen CS8603 mitätöinti
+        public Tetromino GetCurrentTetromino() 
+        {
+            return currentTetromino;
+        }
+        #pragma warning restore CS8603
+
+        private void GenerateNewTetromino()
+        {
+            int randomIndex = new Random().Next(0, tetrominoShapes.Length);
+            int[][] tetrominoShapeJagged = tetrominoShapes[randomIndex];
             int[,] tetrominoShape = new int[tetrominoShapeJagged.Length, tetrominoShapeJagged[0].Length];
 
             for (int i = 0; i < tetrominoShapeJagged.Length; i++)
@@ -106,19 +125,12 @@ namespace Tetris.Model
                 }
             }
 
-            // Set the current tetromino to the I tetromino
-            currentTetromino = new Tetromino(tetrominoShape);
-            this.mainWindow = mainWindow;
+            currentTetromino = new Tetromino(tetrominoShape);        
         }
 
-        public string GetBlockImage(TetrominoShape shape)
+        public void LockTetromino()
         {
-            return blockImages[(int)shape];
-        }
-
-        public Tetromino GetCurrentTetromino() 
-        {
-            return currentTetromino;
+            currentTetromino = null;
         }
 
         public void GameTick(object? sender, EventArgs e)
@@ -135,7 +147,7 @@ namespace Tetris.Model
             {
                 // If the tetromino can't move down, it's because it's either at the bottom or blocked by other tetrominos
 
-                //GameState.LockTetromino();    code this method later
+                gameState.LockTetromino();
 
                 bool foundCompleted = false;
                 for (int row = Grid.Height - 1; row >= 0; row--)
@@ -149,10 +161,10 @@ namespace Tetris.Model
 
                 if (foundCompleted)
                 {
-                    Grid.ClearCompletedRows();
+                    gameState.Grid.ClearCompletedRows();
                 }
                 
-                //GameState.GenerateNewTetromino();     code this method later
+                gameState.GenerateNewTetromino();
             }
 
             // Redraw the game board
@@ -169,4 +181,5 @@ namespace Tetris.Model
         S,
         T,
         Z
-    }}
+    }
+}
