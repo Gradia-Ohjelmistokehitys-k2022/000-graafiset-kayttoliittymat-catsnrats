@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using static Tetris.MainWindow;
 
 namespace Tetris.Model
 {
-    internal class GameState
+    public class GameState
     {
         public Tetromino currentTetromino;
         public Grid Grid { get; private set; }
+
+        public GameState? gameState;        
+        private MainWindow mainWindow;
 
         // Define tetromino shapes as arrays of integers
         private readonly int[][][] tetrominoShapes = new int[][][]
@@ -86,12 +90,12 @@ namespace Tetris.Model
             "Assets/TileRed.png"     // Z
         };
 
-        public GameState()
+        public GameState(MainWindow mainWindow)
         {
             // alustaa ruudukon
             Grid = new Grid();
 
-            int[][] tetrominoShapeJagged = tetrominoShapes[0];
+            int[][] tetrominoShapeJagged = tetrominoShapes[4];
             int[,] tetrominoShape = new int[tetrominoShapeJagged.Length, tetrominoShapeJagged[0].Length];
 
             for (int i = 0; i < tetrominoShapeJagged.Length; i++)
@@ -103,7 +107,8 @@ namespace Tetris.Model
             }
 
             // Set the current tetromino to the I tetromino
-            currentTetromino = new Tetromino(tetrominoShape);            
+            currentTetromino = new Tetromino(tetrominoShape);
+            this.mainWindow = mainWindow;
         }
 
         public string GetBlockImage(TetrominoShape shape)
@@ -114,7 +119,45 @@ namespace Tetris.Model
         public Tetromino GetCurrentTetromino() 
         {
             return currentTetromino;
-        }        
+        }
+
+        public void GameTick(object? sender, EventArgs e)
+        {
+            if (currentTetromino == null || gameState == null || gameState.Grid == null)
+                return;
+
+            // Move the current tetromino down
+            if (gameState.Grid.CanMoveToPosition(currentTetromino, 0, 1))
+            {
+                currentTetromino.Move(0, 1);
+            }
+            else 
+            {
+                // If the tetromino can't move down, it's because it's either at the bottom or blocked by other tetrominos
+
+                //GameState.LockTetromino();    code this method later
+
+                bool foundCompleted = false;
+                for (int row = Grid.Height - 1; row >= 0; row--)
+                {
+                    if (Grid.IsRowCompleted(row))
+                    {
+                        foundCompleted = true;
+                        break; // mikäli rivi on täysi -> se pitäisi poistaa
+                    }
+                }
+
+                if (foundCompleted)
+                {
+                    Grid.ClearCompletedRows();
+                }
+                
+                //GameState.GenerateNewTetromino();     code this method later
+            }
+
+            // Redraw the game board
+            mainWindow.Draw(this);
+        }
     }
 
     public enum TetrominoShape

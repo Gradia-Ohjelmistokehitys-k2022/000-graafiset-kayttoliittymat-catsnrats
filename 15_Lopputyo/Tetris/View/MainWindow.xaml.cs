@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Tetris.Model;
 
 
@@ -20,7 +21,10 @@ namespace Tetris
     public partial class MainWindow : Window
     {
         // GameState-luokan instanssi
-        private GameState gameState;
+        public GameState gameState;        
+        public Tetromino? currentTetromino;
+        private DispatcherTimer gameTimer;
+
 
         private readonly ImageSource[] tileImages = new ImageSource[]
         {
@@ -33,11 +37,16 @@ namespace Tetris
         public MainWindow()
         {
             InitializeComponent();
-
-            gameState = new GameState();
+            gameState = new GameState(this);            
 
             // piirtoalueen alustus
             imageControls = SetupGameCanvas(gameState.Grid);
+
+            // ajastimen konffaus
+            gameTimer = new DispatcherTimer();
+            gameTimer.Interval = TimeSpan.FromSeconds(1);
+            gameTimer.Tick += gameState.GameTick;
+            gameTimer.Start();
         }
 
         private Image[,] SetupGameCanvas(Model.Grid grid)
@@ -81,19 +90,7 @@ namespace Tetris
                 for (int x = 0; x < Model.Grid.Width; x++)
                 {
                     bool isOccupied = grid.IsCellOccupied(x, y); // tarkistaa onko ruutu vapaa / varattu
-                    int id = isOccupied ? 1 : 0; // 1 varatuille ruuduille, 0 vapaille
-
-                    //imageControls[x, y].Source = isOccupied ? blockImages[id] : tileImages[id];
-
-                    // isOccupied arvon myöhemmät käsittelyt ?
-                    //if (isOccupied)
-                    //{
-                    //    // tee jotain
-                    //}
-                    //else
-                    //{
-                    //    // if not occupied
-                    //}
+                    int id = isOccupied ? 1 : 0; // 1 varatuille ruuduille, 0 vapaille                    
                 }
             }
         }
@@ -136,7 +133,7 @@ namespace Tetris
             }
         }
 
-        private void Draw(GameState gameState) 
+        public void Draw(GameState gameState) 
         {
             DrawGrid(gameState.Grid);            
             DrawBlock(gameState.currentTetromino);
@@ -180,8 +177,18 @@ namespace Tetris
                 default:
                     return;
             }
+
+            if (e.Key == Key.Down)
+            {
+                gameTimer.Interval = TimeSpan.FromMilliseconds(100); // nopeammin alas
+            }
+
+            if (e.Key == Key.Up)
+            {
+                gameTimer.Interval = TimeSpan.FromSeconds(1); // normaali nopeus
+            }
             Draw(gameState);            
-        }
+        }       
 
         private void GameCanvas_Loaded(object sender, RoutedEventArgs e)
         { 
