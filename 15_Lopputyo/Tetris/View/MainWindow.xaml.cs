@@ -45,7 +45,7 @@ namespace Tetris
             // ajastimen konffaus
             gameTimer = new DispatcherTimer();
             gameTimer.Interval = TimeSpan.FromSeconds(1);
-            gameTimer.Tick += gameState.GameTick;
+            gameTimer.Tick += (sender, e) => gameState.GameTick(sender, e);
             gameTimer.Start();
         }
 

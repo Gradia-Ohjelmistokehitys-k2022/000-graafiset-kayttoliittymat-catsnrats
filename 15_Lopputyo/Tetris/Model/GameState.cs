@@ -141,7 +141,7 @@ namespace Tetris.Model
             // Move the current tetromino down
             if (gameState.Grid.CanMoveToPosition(currentTetromino, 0, 1))
             {
-                currentTetromino.Move(0, 1);
+                currentTetromino.Move(0, 1);               
             }
             else 
             {
