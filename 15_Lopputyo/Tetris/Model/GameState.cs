@@ -99,7 +99,7 @@ namespace Tetris.Model
             this.mainWindow = mainWindow;
         }
 
-        public string GetBlockImage(TetrominoShape shape)
+        public string GetBlockImage(TetrominoShape shape) // onko tarpeellinen ?
         {
             return blockImages[(int)shape];
         }
@@ -128,7 +128,7 @@ namespace Tetris.Model
             currentTetromino = new Tetromino(tetrominoShape);        
         }
 
-        public void LockTetromino()
+        public void LockTetromino() // lukitsee tetron osuessaan pohjalle tai toisen päälle
         {
             foreach (var block in currentTetromino.blocks)
             {

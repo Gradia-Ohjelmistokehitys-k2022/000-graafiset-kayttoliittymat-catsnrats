@@ -68,10 +68,10 @@ namespace Tetris
                     image.Source = tileImages[0];
 
                     // Image-kontrollin positio ja koko
-                    image.Width = 25;
-                    image.Height = 25;
-                    Canvas.SetTop(image, y * 25); // Canvas.SetTop(image, (y - 2) * 25);
-                    Canvas.SetLeft(image, x * 25);
+                    image.Width = blockSize;
+                    image.Height = blockSize;
+                    Canvas.SetTop(image, y * blockSize); // Canvas.SetTop(image, (y - 2) * 25);
+                    Canvas.SetLeft(image, x * blockSize);
 
                     // Image-kontrolli piirtoalueelle
                     GameCanvas.Children.Add(image);
@@ -85,12 +85,59 @@ namespace Tetris
 
         private void DrawGrid(Model.Grid grid)
         {
+            GameCanvas.Children.Clear();
+
             for (int y = 0; y < Model.Grid.Height; y++)
             {
                 for (int x = 0; x < Model.Grid.Width; x++)
                 {
-                    bool isOccupied = grid.IsCellOccupied(x, y); // tarkistaa onko ruutu vapaa / varattu
-                    int id = isOccupied ? 1 : 0; // 1 varatuille ruuduille, 0 vapaille                    
+                    Rectangle rect = new Rectangle();
+                    rect.Stroke = Brushes.Black;
+                    rect.StrokeThickness = 1;
+                    rect.Width = blockSize;
+                    rect.Height = blockSize;
+                    Canvas.SetLeft(rect, x * blockSize);
+                    Canvas.SetTop(rect, y * blockSize);
+                    GameCanvas.Children.Add(rect);
+                    //bool isOccupied = grid.IsCellOccupied(x, y); // tarkistaa onko ruutu vapaa / varattu
+                    //int id = isOccupied ? 1 : 0; // 1 varatuille ruuduille, 0 vapaille                    
+                }
+            }
+
+            for (int y = 0; y < Model.Grid.Height; y++) // occupied cells...
+            {
+                for (int x = 0; x < Model.Grid.Width; x++)
+                {
+                    bool isOccupied = grid.IsCellOccupied(x, y);
+                    if (isOccupied)
+                    {
+                        // kuva tetron varatuille ruuduille                        
+                        string blockImageSource = gameState.blockImages[shapeValue];
+
+                        // luo kuva-kontrollin ? tetrominolle
+                        Image blockImage = new Image();
+                        blockImage.Source = new BitmapImage(new Uri(blockImageSource, UriKind.Relative));
+
+                        blockImage.Width = blockSize;
+                        blockImage.Height = blockSize;
+
+                        double left = (position.X + x) * blockSize;
+                        double top = (position.Y + y) * blockSize;
+
+                        Canvas.SetLeft(blockImage, left);
+                        Canvas.SetTop(blockImage, top);
+
+                        // asettaa tetrominon kankaalle
+                        GameCanvas.Children.Add(blockImage);
+
+                        //Rectangle rect = new Rectangle();
+                        //rect.Fill = Brushes.Blue;
+                        //rect.Width = blockSize;
+                        //rect.Height = blockSize;
+                        //Canvas.SetLeft(rect, x * blockSize);
+                        //Canvas.SetTop(rect, y * blockSize);
+                        //GameCanvas.Children.Add(rect);
+                    }
                 }
             }
         }
@@ -101,7 +148,7 @@ namespace Tetris
             Point position = block.GetPosition();
 
             // putsaa taustan ennen palikan piirtoa
-            GameCanvas.Children.Clear();
+            //GameCanvas.Children.Clear();
 
             for (int y = 0; y < shape.GetLength(0); y++)
             {
@@ -135,8 +182,12 @@ namespace Tetris
 
         public void Draw(GameState gameState) 
         {
-            DrawGrid(gameState.Grid);            
-            DrawBlock(gameState.currentTetromino);
+            DrawGrid(gameState.Grid);
+            
+            if (gameState.currentTetromino != null)
+            {
+                DrawBlock(gameState.currentTetromino);
+            }            
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
