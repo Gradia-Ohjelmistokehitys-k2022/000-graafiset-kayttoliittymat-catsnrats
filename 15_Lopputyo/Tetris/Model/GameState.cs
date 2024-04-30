@@ -14,7 +14,7 @@ namespace Tetris.Model
         public Tetromino? currentTetromino;
         public Grid Grid { get; private set; }
 
-        public GameState? gameState;        
+        //public GameState? gameState;        
         private MainWindow mainWindow;
 
         // Define tetromino shapes as arrays of integers
@@ -135,24 +135,24 @@ namespace Tetris.Model
 
         public void GameTick(object? sender, EventArgs e)
         {
-            if (currentTetromino == null || gameState == null || gameState.Grid == null)
+            if (this.currentTetromino == null || this.Grid == null)
                 return;
 
             // Move the current tetromino down
-            if (gameState.Grid.CanMoveToPosition(currentTetromino, 0, 1))
+            if (this.Grid.CanMoveToPosition(this.currentTetromino, 0, 1))
             {
-                currentTetromino.Move(0, 1);               
+                this.currentTetromino.Move(0, 1);               
             }
             else 
             {
                 // If the tetromino can't move down, it's because it's either at the bottom or blocked by other tetrominos
 
-                gameState.LockTetromino();
+                this.LockTetromino();
 
                 bool foundCompleted = false;
                 for (int row = Grid.Height - 1; row >= 0; row--)
                 {
-                    if (Grid.IsRowCompleted(row))
+                    if (this.Grid.IsRowCompleted(row))
                     {
                         foundCompleted = true;
                         break; // mikäli rivi on täysi -> se pitäisi poistaa
@@ -161,10 +161,10 @@ namespace Tetris.Model
 
                 if (foundCompleted)
                 {
-                    gameState.Grid.ClearCompletedRows();
+                    this.Grid.ClearCompletedRows();
                 }
                 
-                gameState.GenerateNewTetromino();
+                this.GenerateNewTetromino();
             }
 
             // Redraw the game board
