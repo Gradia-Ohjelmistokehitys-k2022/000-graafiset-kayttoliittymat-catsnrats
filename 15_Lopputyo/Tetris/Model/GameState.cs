@@ -130,7 +130,13 @@ namespace Tetris.Model
 
         public void LockTetromino()
         {
-            currentTetromino = null;
+            foreach (var block in currentTetromino.blocks)
+            {
+                this.Grid[block.X, block.Y] = true;
+            }
+
+            this.Grid.ClearCompletedRows();
+            GenerateNewTetromino(); 
         }
 
         public void GameTick(object? sender, EventArgs e)

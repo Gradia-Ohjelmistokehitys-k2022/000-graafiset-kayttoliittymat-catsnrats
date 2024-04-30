@@ -44,7 +44,7 @@ namespace Tetris
 
             // ajastimen konffaus
             gameTimer = new DispatcherTimer();
-            gameTimer.Interval = TimeSpan.FromSeconds(1);
+            gameTimer.Interval = TimeSpan.FromMilliseconds(200);
             gameTimer.Tick += (sender, e) => gameState.GameTick(sender, e);
             gameTimer.Start();
         }
@@ -83,7 +83,7 @@ namespace Tetris
             return imageControls;
         }
 
-        private void DrawGrid(Model.Grid grid) // ALKUPERÄINEN
+        private void DrawGrid(Model.Grid grid)
         {
             for (int y = 0; y < Model.Grid.Height; y++)
             {
