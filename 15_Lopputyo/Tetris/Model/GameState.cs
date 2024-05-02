@@ -11,7 +11,11 @@ namespace Tetris.Model
 {
     public class GameState
     {
+        private List<Tetromino> tetrominos;
+        public Tetromino CurrentTetromino { get; private set; }
+
         public Tetromino? currentTetromino;
+        public Tetromino? stackedTetromino;
         public Grid Grid { get; private set; }
 
         //public GameState? gameState;        
@@ -92,6 +96,8 @@ namespace Tetris.Model
 
         public GameState(MainWindow mainWindow)
         {
+            tetrominos = new List<Tetromino>();
+
             // alustaa ruudukon
             Grid = new Grid();
 
@@ -175,6 +181,18 @@ namespace Tetris.Model
 
             // Redraw the game board
             mainWindow.Draw(this);
+        }
+
+        public Tetromino? GetOccupyingTetromino(int x, int y)
+        {
+            foreach (var tetromino in tetrominos)
+            {
+                if (Grid.IsCellOccupied(x, y))
+                {  
+                    return tetromino;
+                }
+            }
+            return null;
         }
     }
 

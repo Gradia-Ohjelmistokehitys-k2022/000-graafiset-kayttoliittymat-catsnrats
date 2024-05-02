@@ -23,6 +23,7 @@ namespace Tetris
         // GameState-luokan instanssi
         public GameState gameState;        
         public Tetromino? currentTetromino;
+        public Tetromino? stackedTetromino;
         private DispatcherTimer gameTimer;
 
 
@@ -85,9 +86,9 @@ namespace Tetris
 
         private void DrawGrid(Model.Grid grid)
         {
-            GameCanvas.Children.Clear();
+            GameCanvas.Children.Clear(); // putsaa pelialueen
 
-            for (int y = 0; y < Model.Grid.Height; y++)
+            for (int y = 0; y < Model.Grid.Height; y++) // piirtää ruudukon
             {
                 for (int x = 0; x < Model.Grid.Width; x++)
                 {
@@ -103,13 +104,19 @@ namespace Tetris
                     //int id = isOccupied ? 1 : 0; // 1 varatuille ruuduille, 0 vapaille                    
                 }
             }
+        }
 
-            for (int y = 0; y < Model.Grid.Height; y++) // occupied cells...
+        private void DrawStackedBlock(Tetromino block)
+        {
+            int[,] shape = block.GetShape();
+            Point position = block.GetPosition();
+
+            for (int y = 0; y < shape.GetLength(0); y++)
             {
-                for (int x = 0; x < Model.Grid.Width; x++)
+                for (int x = 0; x < shape.GetLength(1); x++)
                 {
-                    bool isOccupied = grid.IsCellOccupied(x, y);
-                    if (isOccupied)
+                    int shapeValue = shape[y, x];
+                    if (shapeValue >= 0 && shapeValue < gameState.blockImages.Length) // y, x oikean muodon alkupos.
                     {
                         // kuva tetron varatuille ruuduille                        
                         string blockImageSource = gameState.blockImages[shapeValue];
@@ -129,14 +136,6 @@ namespace Tetris
 
                         // asettaa tetrominon kankaalle
                         GameCanvas.Children.Add(blockImage);
-
-                        //Rectangle rect = new Rectangle();
-                        //rect.Fill = Brushes.Blue;
-                        //rect.Width = blockSize;
-                        //rect.Height = blockSize;
-                        //Canvas.SetLeft(rect, x * blockSize);
-                        //Canvas.SetTop(rect, y * blockSize);
-                        //GameCanvas.Children.Add(rect);
                     }
                 }
             }
@@ -145,10 +144,7 @@ namespace Tetris
         private void DrawBlock(Tetromino block)
         {         
             int[,] shape = block.GetShape();
-            Point position = block.GetPosition();
-
-            // putsaa taustan ennen palikan piirtoa
-            //GameCanvas.Children.Clear();
+            Point position = block.GetPosition();            
 
             for (int y = 0; y < shape.GetLength(0); y++)
             {
@@ -183,6 +179,13 @@ namespace Tetris
         public void Draw(GameState gameState) 
         {
             DrawGrid(gameState.Grid);
+
+            // piirtää kasatut tetrot
+            DrawStackedBlock(gameState.stackedTetromino);
+            //foreach (var tetromino in gameState.stackedTetromino)
+            //{
+            //    DrawStackedBlock(tetromino);
+            //}            
             
             if (gameState.currentTetromino != null)
             {
