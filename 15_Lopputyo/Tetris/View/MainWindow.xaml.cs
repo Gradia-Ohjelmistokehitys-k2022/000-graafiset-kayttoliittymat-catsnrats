@@ -19,12 +19,12 @@ namespace Tetris
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
-        // GameState-luokan instanssi
-        public GameState gameState;        
+    {        
+        public GameState gameState;     // GameState-luokan instanssi   
         public Tetromino? currentTetromino;
         public Tetromino? stackedTetromino;
         private DispatcherTimer gameTimer;
+        private Point previousFallingBlockPosition; // edellinen tetron positio talteen
 
 
         private readonly ImageSource[] tileImages = new ImageSource[]
@@ -83,7 +83,6 @@ namespace Tetris
             }
             return imageControls;
         }
-
         private void DrawGrid(Model.Grid grid)
         {
             GameCanvas.Children.Clear(); // putsaa pelialueen
@@ -99,15 +98,15 @@ namespace Tetris
                     rect.Height = blockSize;
                     Canvas.SetLeft(rect, x * blockSize);
                     Canvas.SetTop(rect, y * blockSize);
-                    GameCanvas.Children.Add(rect);
-                    //bool isOccupied = grid.IsCellOccupied(x, y); // tarkistaa onko ruutu vapaa / varattu
-                    //int id = isOccupied ? 1 : 0; // 1 varatuille ruuduille, 0 vapaille                    
+                    GameCanvas.Children.Add(rect);                                    
                 }
             }
         }
-
         private void DrawStackedBlock(Tetromino block)
         {
+            if (block == null)
+                return;
+
             int[,] shape = block.GetShape();
             Point position = block.GetPosition();
 
@@ -176,20 +175,34 @@ namespace Tetris
             }
         }
 
+        // metodi tetron poistoon edellisestä positiosta (putoaminen)
+        private void EraseBlock(Point position)
+        {
+            // koordinaatit perustuen tetron sijaintiin
+            double left = position.X * blockSize;
+            double top = position.Y * blockSize;
+
+            // etsi ja poista tetron kuva taustalta
+            foreach (UIElement element in GameCanvas.Children) 
+            {
+                if (element is Image blockImage && Canvas.GetLeft(blockImage) == left && Canvas.GetTop(blockImage) == top)
+                {
+                    GameCanvas.Children.Remove(blockImage);
+                    break;
+                }
+            }
+        }
+
         public void Draw(GameState gameState) 
         {
             DrawGrid(gameState.Grid);
+            EraseBlock(previousFallingBlockPosition); // poistaa putoavan tetron edellisen position            
+            DrawStackedBlock(gameState.stackedTetromino); // piirtää kasatut tetrot             
 
-            // piirtää kasatut tetrot
-            DrawStackedBlock(gameState.stackedTetromino);
-            //foreach (var tetromino in gameState.stackedTetromino)
-            //{
-            //    DrawStackedBlock(tetromino);
-            //}            
-            
-            if (gameState.currentTetromino != null)
+            if (gameState.currentTetromino != null) // piirrä putoava tetro sen uuteen positioon
             {
                 DrawBlock(gameState.currentTetromino);
+                previousFallingBlockPosition = gameState.currentTetromino.GetPosition();
             }            
         }
 
