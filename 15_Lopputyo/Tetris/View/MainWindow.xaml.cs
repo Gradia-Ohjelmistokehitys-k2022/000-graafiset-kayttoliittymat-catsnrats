@@ -25,6 +25,7 @@ namespace Tetris
         public Tetromino? stackedTetromino;
         private DispatcherTimer gameTimer;
         private Point previousFallingBlockPosition; // edellinen tetron positio talteen
+        private const double tolerance = 0.001;
 
 
         private readonly ImageSource[] tileImages = new ImageSource[]
@@ -85,7 +86,7 @@ namespace Tetris
         }
         private void DrawGrid(Model.Grid grid)
         {
-            GameCanvas.Children.Clear(); // putsaa pelialueen
+            //GameCanvas.Children.Clear(); // putsaa pelialueen
 
             for (int y = 0; y < Model.Grid.Height; y++) // piirtää ruudukon
             {
@@ -99,43 +100,6 @@ namespace Tetris
                     Canvas.SetLeft(rect, x * blockSize);
                     Canvas.SetTop(rect, y * blockSize);
                     GameCanvas.Children.Add(rect);                                    
-                }
-            }
-        }
-        private void DrawStackedBlock(Tetromino block)
-        {
-            if (block == null)
-                return;
-
-            int[,] shape = block.GetShape();
-            Point position = block.GetPosition();
-
-            for (int y = 0; y < shape.GetLength(0); y++)
-            {
-                for (int x = 0; x < shape.GetLength(1); x++)
-                {
-                    int shapeValue = shape[y, x];
-                    if (shapeValue >= 0 && shapeValue < gameState.blockImages.Length) // y, x oikean muodon alkupos.
-                    {
-                        // kuva tetron varatuille ruuduille                        
-                        string blockImageSource = gameState.blockImages[shapeValue];
-
-                        // luo kuva-kontrollin ? tetrominolle
-                        Image blockImage = new Image();
-                        blockImage.Source = new BitmapImage(new Uri(blockImageSource, UriKind.Relative));
-
-                        blockImage.Width = blockSize;
-                        blockImage.Height = blockSize;
-
-                        double left = (position.X + x) * blockSize;
-                        double top = (position.Y + y) * blockSize;
-
-                        Canvas.SetLeft(blockImage, left);
-                        Canvas.SetTop(blockImage, top);
-
-                        // asettaa tetrominon kankaalle
-                        GameCanvas.Children.Add(blockImage);
-                    }
                 }
             }
         }
@@ -175,6 +139,12 @@ namespace Tetris
             }
         }
 
+        private bool IsCloseEnough(double a, double b)
+        {
+            double tolerance = 0.001;
+            return Math.Abs(a - b) < tolerance;
+        }
+
         // metodi tetron poistoon edellisestä positiosta (putoaminen)
         private void EraseBlock(Point position)
         {
@@ -182,13 +152,19 @@ namespace Tetris
             double left = position.X * blockSize;
             double top = position.Y * blockSize;
 
-            // etsi ja poista tetron kuva taustalta
-            foreach (UIElement element in GameCanvas.Children) 
+            // Find and remove the tetromino image from the background
+            foreach (UIElement element in GameCanvas.Children)
             {
-                if (element is Image blockImage && Canvas.GetLeft(blockImage) == left && Canvas.GetTop(blockImage) == top)
+                if (element is Image blockImage)
                 {
-                    GameCanvas.Children.Remove(blockImage);
-                    break;
+                    double imageLeft = Canvas.GetLeft(blockImage);
+                    double imageTop = Canvas.GetTop(blockImage);
+
+                    if (IsCloseEnough(left, imageLeft) && IsCloseEnough(top, imageTop))
+                    {
+                        GameCanvas.Children.Remove(blockImage);                       
+                        break;
+                    }
                 }
             }
         }
@@ -196,8 +172,7 @@ namespace Tetris
         public void Draw(GameState gameState) 
         {
             DrawGrid(gameState.Grid);
-            EraseBlock(previousFallingBlockPosition); // poistaa putoavan tetron edellisen position            
-            DrawStackedBlock(gameState.stackedTetromino); // piirtää kasatut tetrot             
+            EraseBlock(previousFallingBlockPosition); // poistaa putoavan tetron edellisen position          
 
             if (gameState.currentTetromino != null) // piirrä putoava tetro sen uuteen positioon
             {

@@ -60,13 +60,7 @@ namespace Tetris.Model
             {
                 gridCells[x, y] = occupied;
             }
-        }
-
-        // metodi ruudukon tyhjentämiseen
-        public void ClearGrid() 
-        {
-            Array.Clear(gridCells, 0, gridCells.Length);
-        }
+        }        
 
         // metodi tarkistamaan onko rivi täynnä
         public bool IsRowCompleted(int row) 
@@ -147,20 +141,6 @@ namespace Tetris.Model
                 }
             }
             return true;            
-        }
-
-        // päivittää gridiä pelaajan liikuttaessa pelikoita
-        public void UpdateGrid(Tetromino tetromino) 
-        {
-            foreach (var block in tetromino.blocks) // putsaa palikoiden vanhan position
-            {
-                gridCells[block.X, block.Y] = false;
-            }
-
-            foreach (var block in tetromino.blocks) // merkkaa uudet positiot
-            {
-                gridCells[block.X, block.Y] = true;
-            }
-        }
+        }       
     }
 }
