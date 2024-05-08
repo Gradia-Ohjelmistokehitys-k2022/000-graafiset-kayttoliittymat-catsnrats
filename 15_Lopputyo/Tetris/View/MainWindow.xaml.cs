@@ -103,7 +103,7 @@ namespace Tetris
         //}
 
         private void DrawBlock(Tetromino block)
-        {         
+        {            
             int[,] shape = block.GetShape();
             Point position = block.GetPosition();            
 
@@ -139,44 +139,50 @@ namespace Tetris
 
         private bool IsCloseEnough(double a, double b)
         {
-            double tolerance = 0.001;
+            double tolerance = 0.001; // 0.001
             return Math.Abs(a - b) < tolerance;
         }
 
         // metodi tetron poistoon edellisestä positiosta (putoaminen)
         private void EraseBlock(Point position)
         {
-            // koordinaatit perustuen tetron sijaintiin
-            double left = position.X * blockSize;
-            double top = position.Y * blockSize;
+            List<UIElement> elementsToRemove = new List<UIElement>();            
 
             // Find and remove the tetromino image from the background
-            foreach (UIElement element in GameCanvas.Children)
+            lock (GameCanvas.Children.SyncRoot)
             {
-                if (element is Image blockImage)
+                foreach (UIElement element in GameCanvas.Children)
                 {
-                    double imageLeft = Canvas.GetLeft(blockImage);
-                    double imageTop = Canvas.GetTop(blockImage);
-
-                    if (IsCloseEnough(left, imageLeft) && IsCloseEnough(top, imageTop))
+                    if (element is Image blockImage)
                     {
-                        GameCanvas.Children.Remove(blockImage);
-                        break;
+                        double imageLeft = Canvas.GetLeft(blockImage);
+                        double imageTop = Canvas.GetTop(blockImage);                         
+
+                        if (imageLeft == position.X * blockSize && imageTop == position.Y * blockSize)
+                        {
+                            elementsToRemove.Add(blockImage);
+                        }
                     }
                 }
+            }
+            // Remove the marked elements
+            foreach (UIElement elementToRemove in elementsToRemove)
+            {
+                GameCanvas.Children.Remove(elementToRemove);
             }
         }
 
         public void Draw(GameState gameState) 
-        {            
-           // DrawGrid(gameState.Grid);                      
+        {
+            // DrawGrid(gameState.Grid);            
 
             if (gameState.currentTetromino != null) // piirrä putoava tetro sen uuteen positioon
             {
+                //gameState.currentTetromino.Move(0, 1);
                 DrawBlock(gameState.currentTetromino);
                 previousFallingBlockPosition = gameState.currentTetromino.GetPosition();
             }
-
+            
             EraseBlock(previousFallingBlockPosition); // poistaa putoavan tetron edellisen position
         }
 
