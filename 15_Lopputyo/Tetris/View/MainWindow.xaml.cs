@@ -78,12 +78,12 @@ namespace Tetris
         }
         private void DrawGrid(Model.Grid grid)
         {
-            //GameCanvas.Children.Clear(); // putsaa pelialueen
+            GameCanvas.Children.Clear(); // putsaa pelialueen
 
             for (int y = 0; y < Model.Grid.Height; y++) // piirtää ruudukon
             {
                 for (int x = 0; x < Model.Grid.Width; x++)
-                {                   
+                {                    
                     Rectangle rect = new Rectangle();
                     rect.Stroke = Brushes.LightSteelBlue;
                     rect.StrokeThickness = 1;
@@ -91,7 +91,7 @@ namespace Tetris
                     rect.Height = blockSize;
                     Canvas.SetLeft(rect, x * blockSize);
                     Canvas.SetTop(rect, y * blockSize);
-                    GameCanvas.Children.Add(rect);
+                    GameCanvas.Children.Add(rect);                    
                 }
             }
         }
@@ -178,7 +178,7 @@ namespace Tetris
                 previousFallingBlockPosition = gameState.currentTetromino.GetPosition();
             }
             
-            EraseBlock(previousFallingBlockPosition); // poistaa putoavan tetron edellisen position
+            //EraseBlock(previousFallingBlockPosition); // poistaa putoavan tetron edellisen position
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

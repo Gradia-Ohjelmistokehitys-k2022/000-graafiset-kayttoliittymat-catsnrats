@@ -17,11 +17,27 @@ namespace Tetris.Model
 
         // 2D-taulukko kuvaamaan taustan ruudukkoa
         private readonly bool[,] gridCells;
+        private readonly int[,] cells;
 
         public Grid() 
         {
             // alustaa gridin
             gridCells = new bool[Width, Height];
+            cells = new int[Width, Height];
+        }
+
+        public int GetCellValue(int x, int y)
+        {
+            // Check if the coordinates are within the bounds of the grid
+            if (x >= 0 && x < gridCells.GetLength(0) && y >= 0 && y < gridCells.GetLength(1))
+            {
+                return cells[x, y];
+            }
+            else
+            {
+                // Return a default value (you can choose what makes sense in your application)
+                return 0;
+            }
         }
 
         // metodi tarkistamaan onko ruutu varattu
