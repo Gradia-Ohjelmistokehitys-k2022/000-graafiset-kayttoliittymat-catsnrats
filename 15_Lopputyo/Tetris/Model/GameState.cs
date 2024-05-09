@@ -1,11 +1,11 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using static Tetris.MainWindow;
+using static Tetris.MainWindow;*/
 
 namespace Tetris.Model
 {
@@ -84,7 +84,7 @@ namespace Tetris.Model
         // Define block images corresponding to each tetromino shape
         public readonly string[] blockImages = new string[]
         {
-            "Assets/Block-Empty.png", // 0 - ruuduille
+            "Assets/TileEmpty.png", // 0 - ruuduille
             "Assets/TileCyan.png",   // I
             "Assets/TileBlue.png",   // J
             "Assets/TileOrange.png", // L
