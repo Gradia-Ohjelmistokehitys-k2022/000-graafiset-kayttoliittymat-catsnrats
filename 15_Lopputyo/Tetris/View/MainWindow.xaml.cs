@@ -39,7 +39,7 @@ namespace Tetris
 
             // ajastimen konffaus
             gameTimer = new DispatcherTimer();
-            gameTimer.Interval = TimeSpan.FromMilliseconds(200);
+            gameTimer.Interval = TimeSpan.FromMilliseconds(500);
             gameTimer.Tick += (sender, e) => gameState.GameTick(sender, e);
             gameTimer.Start();
         }
@@ -48,7 +48,7 @@ namespace Tetris
         {
             Image[,] imageControls = new Image[Model.Grid.Width, Model.Grid.Height];
             
-            //GameCanvas.Children.Clear();
+            GameCanvas.Children.Clear();
 
             // looppi iteroi ruudukon solut
             for (int y = 0; y < Model.Grid.Height; y++)
@@ -78,20 +78,23 @@ namespace Tetris
         }
         private void DrawGrid(Model.Grid grid)
         {
-            GameCanvas.Children.Clear(); // putsaa pelialueen
+            GameCanvas.Children.Clear(); // putsaa pelialueen           
 
             for (int y = 0; y < Model.Grid.Height; y++) // piirtää ruudukon
             {
                 for (int x = 0; x < Model.Grid.Width; x++)
-                {                    
-                    Rectangle rect = new Rectangle();
-                    rect.Stroke = Brushes.LightSteelBlue;
-                    rect.StrokeThickness = 1;
-                    rect.Width = blockSize;
-                    rect.Height = blockSize;
-                    Canvas.SetLeft(rect, x * blockSize);
-                    Canvas.SetTop(rect, y * blockSize);
-                    GameCanvas.Children.Add(rect);                    
+                {
+                    if (grid.IsCellOccupied(x, y))
+                    {
+                        Rectangle rect = new Rectangle();
+                        rect.Stroke = Brushes.LightSteelBlue;
+                        rect.StrokeThickness = 1;
+                        rect.Width = blockSize;
+                        rect.Height = blockSize;
+                        Canvas.SetLeft(rect, x * blockSize);
+                        Canvas.SetTop(rect, y * blockSize);
+                        GameCanvas.Children.Add(rect);
+                    }
                 }
             }
         }
@@ -129,44 +132,7 @@ namespace Tetris
                     }
                 }
             }
-        }
-
-        //private bool IsCloseEnough(double a, double b)
-        //{
-        //    double tolerance = 0.001; // 0.001
-        //    return Math.Abs(a - b) < tolerance;
-        //}
-
-        // metodi tetron poistoon edellisestä positiosta (putoaminen)
-        private void EraseBlock(Point position)
-        {
-            List<UIElement> elementsToRemove = new List<UIElement>();            
-
-            // Find and remove the tetromino image from the background
-            lock (GameCanvas.Children.SyncRoot)
-            {
-                foreach (UIElement element in GameCanvas.Children)
-                {
-                    if (element is Image blockImage)
-                    {
-                        double imageLeft = Canvas.GetLeft(blockImage);                        
-                        double imageTop = Canvas.GetTop(blockImage);                         
-
-                        if (imageLeft == position.X * blockSize && imageTop == position.Y * blockSize)
-                        {
-                            Canvas.GetLeft(blockImage);
-                            Canvas.GetTop(blockImage);
-                            elementsToRemove.Add(blockImage);                            
-                        }
-                    }
-                }
-            }
-            // Remove the marked elements
-            foreach (UIElement elementToRemove in elementsToRemove)
-            {
-                GameCanvas.Children.Remove(elementToRemove);
-            }
-        }
+        }       
 
         public void Draw(GameState gameState) 
         {
@@ -174,11 +140,8 @@ namespace Tetris
 
             if (gameState.currentTetromino != null) // piirrä putoava tetro sen uuteen positioon
             {                
-                DrawBlock(gameState.currentTetromino);
-                previousFallingBlockPosition = gameState.currentTetromino.GetPosition();
-            }
-            
-            //EraseBlock(previousFallingBlockPosition); // poistaa putoavan tetron edellisen position
+                DrawBlock(gameState.currentTetromino);               
+            }     
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

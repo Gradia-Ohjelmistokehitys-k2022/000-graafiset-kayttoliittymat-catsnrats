@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using static Tetris.MainWindow;*/
+using System.Windows;
 
 namespace Tetris.Model
 {
@@ -134,15 +135,16 @@ namespace Tetris.Model
             currentTetromino = new Tetromino(tetrominoShape);        
         }
 
-        public void LockTetromino() // lukitsee tetron osuessaan pohjalle tai toisen päälle
+        public void LockTetromino(Tetromino currentTetromino) // lukitsee tetron osuessaan pohjalle tai toisen päälle
         {
-            foreach (var block in currentTetromino.blocks)
+            foreach (Block block in currentTetromino.blocks)
             {
-                this.Grid[block.X, block.Y] = true;
+                int gridX = block.X;
+                int gridY = block.Y;
+                Point point = new Point(gridX, gridY);
+                Grid.SetCellOccupancy(gridX, gridY, true);
             }
-
-            this.Grid.ClearCompletedRows();
-            GenerateNewTetromino(); 
+            Grid.ClearCompletedRows();           
         }
 
         public void GameTick(object? sender, EventArgs e)
@@ -159,7 +161,7 @@ namespace Tetris.Model
             {
                 // If the tetromino can't move down, it's because it's either at the bottom or blocked by other tetrominos
 
-                this.LockTetromino();
+                this.LockTetromino(currentTetromino);
 
                 bool foundCompleted = false;
                 for (int row = Grid.Height - 1; row >= 0; row--)
