@@ -18,8 +18,7 @@ namespace Tetris
         public GameState gameState;     // GameState-luokan instanssi   
         public Tetromino? currentTetromino;
         public Tetromino? stackedTetromino;
-        private DispatcherTimer gameTimer;
-        private Point previousFallingBlockPosition; // edellinen tetron positio talteen
+        private DispatcherTimer gameTimer;        
 
         private readonly ImageSource[] tileImages = new ImageSource[]
         {
@@ -91,6 +90,10 @@ namespace Tetris
                         rect.StrokeThickness = 1;
                         rect.Width = blockSize;
                         rect.Height = blockSize;
+
+                        double canvasX = x * blockSize;
+                        double canvasY = y * blockSize;
+
                         Canvas.SetLeft(rect, x * blockSize);
                         Canvas.SetTop(rect, y * blockSize);
                         GameCanvas.Children.Add(rect);

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿//using System.Collections.Generic;
+//using System.Linq;
+using System.Windows;
 
 namespace Tetris.Model
 {
@@ -52,8 +54,19 @@ namespace Tetris.Model
             int centerY = totalY / blocks.Count;
 
             return new Point(centerX, centerY);
-        }      
+        }
 
+        public void SetPosition(int x, int y)
+        {
+            int offsetX = x - (int)GetPosition().X;
+            int offsetY = y - (int)GetPosition().Y;
+
+            foreach (var block in blocks)
+            {
+                block.X = offsetX;
+                block.Y = offsetY;
+            }
+        }
         public void Move(int deltaX, int deltaY)
         {
             foreach (var block in blocks)
@@ -93,15 +106,26 @@ namespace Tetris.Model
             }
             shape = rotatedShape;            
         }
+
+        // päivittämään palikan positiot gridiin
+        public void UpdateBlockPositionsToGrid(Grid grid)
+        {
+            foreach (var block in blocks) 
+            {
+                int gridX = (int)GetPosition().X + block.X;
+                int gridY = (int)GetPosition().Y + block.Y;
+                grid.SetCellOccupancy(gridX, gridY, true);
+            }
+        }
     }
-}
-internal class Block
-{
-    public int X { get; set; }
-    public int Y { get; set; }
-    public Block(int x, int y)
+    internal class Block
     {
-        X = x;
-        Y = y;
+        public int X { get; set; }
+        public int Y { get; set; }
+        public Block(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }
