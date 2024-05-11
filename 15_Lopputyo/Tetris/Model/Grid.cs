@@ -1,12 +1,4 @@
-﻿/*using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
-using System.Windows;*/
-
+﻿
 namespace Tetris.Model
 {
     public class Grid
@@ -16,29 +8,13 @@ namespace Tetris.Model
         public const int Height = 20;       
 
         // 2D-taulukko kuvaamaan taustan ruudukkoa
-        private readonly bool[,] gridCells;
-        private readonly int[,] cells;
+        private readonly bool[,] gridCells;        
 
         public Grid() 
         {
             // alustaa gridin
-            gridCells = new bool[Width, Height];
-            //cells = new int[Width, Height];
-        }
-
-        //public int GetCellValue(int x, int y)
-        //{
-        //    // Check if the coordinates are within the bounds of the grid
-        //    if (x >= 0 && x < gridCells.GetLength(0) && y >= 0 && y < gridCells.GetLength(1))
-        //    {
-        //        return cells[x, y];
-        //    }
-        //    else
-        //    {
-        //        // Return a default value (you can choose what makes sense in your application)
-        //        return 0;
-        //    }
-        //}
+            gridCells = new bool[Width, Height];            
+        }        
 
         // metodi tarkistamaan onko ruutu varattu
         public bool IsCellOccupied(int x, int y) 
@@ -76,7 +52,7 @@ namespace Tetris.Model
             {
                 gridCells[x, y] = occupied;
             }
-        }        
+        }
 
         // metodi tarkistamaan onko rivi täynnä
         public bool IsRowCompleted(int row) 
@@ -124,7 +100,7 @@ namespace Tetris.Model
         }
 
         // Onko alue tyhjä
-        public bool IsCellEmpty(int x, int y) 
+        public bool IsCellEmpty(int x, int y)
         {
             return IsWithinBoundaries(x, y) && !gridCells[x, y];
         }

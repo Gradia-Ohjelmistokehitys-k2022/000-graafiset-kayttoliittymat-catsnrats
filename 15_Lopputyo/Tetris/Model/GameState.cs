@@ -111,7 +111,7 @@ namespace Tetris.Model
             return blockImages[(int)shape];
         }
 
-        #pragma warning disable CS8603 // varoituksen CS8603 mitätöinti
+#pragma warning disable CS8603 // varoituksen CS8603 mitätöinti
         public Tetromino GetCurrentTetromino() 
         {
             return currentTetromino;
@@ -141,7 +141,7 @@ namespace Tetris.Model
             {
                 int gridX = block.X;
                 int gridY = block.Y;
-                Point point = new Point(gridX, gridY);
+                //Point point = new Point(gridX, gridY); // ei tarvita?
                 Grid.SetCellOccupancy(gridX, gridY, true);
             }
             Grid.ClearCompletedRows();           
@@ -185,17 +185,17 @@ namespace Tetris.Model
             mainWindow.Draw(this);
         }
 
-        public Tetromino? GetOccupyingTetromino(int x, int y)
-        {
-            foreach (var tetromino in tetrominos)
-            {
-                if (Grid.IsCellOccupied(x, y))
-                {  
-                    return tetromino;
-                }
-            }
-            return null;
-        }
+        //public Tetromino? GetOccupyingTetromino(int x, int y)
+        //{
+        //    foreach (var tetromino in tetrominos)
+        //    {
+        //        if (Grid.IsCellOccupied(x, y))
+        //        {  
+        //            return tetromino;
+        //        }
+        //    }
+        //    return null;
+        //}
     }
 
     public enum TetrominoShape

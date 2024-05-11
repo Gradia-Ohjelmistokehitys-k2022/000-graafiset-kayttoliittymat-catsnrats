@@ -181,17 +181,7 @@ namespace Tetris
                     break;
                 default:
                     return;
-            }
-
-            if (e.Key == Key.Down)
-            {
-                gameTimer.Interval = TimeSpan.FromMilliseconds(100); // nopeammin alas
-            }
-
-            if (e.Key == Key.Up)
-            {
-                gameTimer.Interval = TimeSpan.FromSeconds(1); // normaali nopeus
-            }
+            }            
             Draw(gameState);            
         }       
 
