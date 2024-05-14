@@ -1,7 +1,7 @@
 ﻿
 namespace TetrisGame
 {
-    partial class Form1
+    partial class Tetris
     {
         /// <summary>
         ///  Required designer variable.
@@ -31,13 +31,13 @@ namespace TetrisGame
         {
             SuspendLayout();
             // 
-            // Form1
+            // Tetris
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1446, 1136);
-            Name = "Form1";
-            Text = "Form1";
+            Name = "Tetris";
+            Text = "Tetris";
             ResumeLayout(false);
         }
 

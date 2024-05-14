@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace TetrisGame
 {
-    public partial class Form1 : Form
+    public partial class Tetris : Form
     {
         private const int BoardWidth = 10;
         private const int BoardHeight = 20;
@@ -15,7 +15,7 @@ namespace TetrisGame
         private System.Windows.Forms.Timer gameTimer = new System.Windows.Forms.Timer();
         private Random random = new Random();
 
-        public Form1()
+        public Tetris()
         {
             InitializeComponent();
             InitializeGame();
@@ -105,6 +105,24 @@ namespace TetrisGame
             return false;
         }
 
+        private void RotateBlock()
+        {
+            int[,] rotatedBlock = new int[currentBlock.GetLength(1), currentBlock.GetLength(0)];
+
+            for (int x = 0; x < currentBlock.GetLength(0); x++)
+            {
+                for (int y = 0; y < currentBlock.GetLength(1); y++)
+                {
+                    rotatedBlock[y, currentBlock.GetLength(0) - x - 1] = currentBlock[x, y];
+                }
+            }
+
+            if (IsBlockValid(rotatedBlock, currentBlockPosition))
+            {
+                currentBlock = rotatedBlock;
+            }
+        }
+
         private bool IsBlockValid(int[,] block, Point position)
         {
             int blockWidth = block.GetLength(0); // palikan leveys
@@ -135,9 +153,12 @@ namespace TetrisGame
 
         private void MergeBlock()
         {
-            for (int x = 0; x < 4; x++)
+            int blockWidth = currentBlock.GetLength(0);
+            int blockHeight = currentBlock.GetLength(1);
+
+            for (int x = 0; x < blockWidth; x++)
             {
-                for (int y = 0; y < 4; y++)
+                for (int y = 0; y < blockHeight; y++)
                 {
                     if (currentBlock[x, y] == 1)
                     {
@@ -186,7 +207,7 @@ namespace TetrisGame
             }
         }
 
-        private void Form1_Paint(object sender, PaintEventArgs e)
+        private void Form1_Paint(object? sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             int blockSize = 25;
@@ -203,7 +224,7 @@ namespace TetrisGame
                         int yPos = y * blockSize;
                         Rectangle blockRect = new Rectangle(xPos, yPos, blockSize, blockSize);
 
-                        g.FillRectangle(Brushes.Red, blockRect);
+                        g.FillRectangle(Brushes.Purple, blockRect);
                     }
                 }
             }
@@ -247,7 +268,7 @@ namespace TetrisGame
                     MoveBlock(0, 1);
                     break;
                 case Keys.Up:
-                    // Rotate block
+                    RotateBlock();
                     break;
             }
             return base.ProcessCmdKey(ref msg, keyData);
