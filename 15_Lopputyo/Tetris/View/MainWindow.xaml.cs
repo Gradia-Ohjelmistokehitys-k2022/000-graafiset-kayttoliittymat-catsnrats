@@ -38,7 +38,7 @@ namespace Tetris
 
             // ajastimen konffaus
             gameTimer = new DispatcherTimer();
-            gameTimer.Interval = TimeSpan.FromMilliseconds(500);
+            gameTimer.Interval = TimeSpan.FromMilliseconds(800);
             gameTimer.Tick += (sender, e) => gameState.GameTick(sender, e);
             gameTimer.Start();
         }
@@ -77,29 +77,33 @@ namespace Tetris
         }
         private void DrawGrid(Model.Grid grid)
         {
-            GameCanvas.Children.Clear(); // putsaa pelialueen           
+            GameCanvas.Children.Clear(); // putsaa pelialueen            
 
-            for (int y = 0; y < Model.Grid.Height; y++) // piirtää ruudukon
-            {
-                for (int x = 0; x < Model.Grid.Width; x++)
-                {
-                    if (grid.IsCellOccupied(x, y))
-                    {
-                        Rectangle rect = new Rectangle();
-                        rect.Stroke = Brushes.LightSteelBlue;
-                        rect.StrokeThickness = 1;
-                        rect.Width = blockSize;
-                        rect.Height = blockSize;
-
-                        double canvasX = x * blockSize;
-                        double canvasY = y * blockSize;
-
-                        Canvas.SetLeft(rect, x * blockSize);
-                        Canvas.SetTop(rect, y * blockSize);
-                        GameCanvas.Children.Add(rect);
-                    }
-                }
+            foreach (var tetromino in gameState.tetrominos) 
+            { 
+                DrawBlock(tetromino);
             }
+            //for (int y = 0; y < Model.Grid.Height; y++) // piirtää ruudukon
+            //{
+            //    for (int x = 0; x < Model.Grid.Width; x++)
+            //    {
+            //        if (grid.IsCellOccupied(x, y))
+            //        {
+            //            Rectangle rect = new Rectangle();
+            //            rect.Stroke = Brushes.LightSteelBlue;
+            //            rect.StrokeThickness = 1;
+            //            rect.Width = blockSize;
+            //            rect.Height = blockSize;
+
+            //            double canvasX = x * blockSize;
+            //            double canvasY = y * blockSize;
+
+            //            Canvas.SetLeft(rect, canvasX);
+            //            Canvas.SetTop(rect, canvasY);
+            //            GameCanvas.Children.Add(rect);
+            //        }
+            //    }
+            //}
         }
 
         private void DrawBlock(Tetromino block)

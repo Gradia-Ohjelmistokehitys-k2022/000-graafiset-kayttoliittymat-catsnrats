@@ -56,17 +56,17 @@ namespace Tetris.Model
             return new Point(centerX, centerY);
         }
 
-        public void SetPosition(int x, int y)
-        {
-            int offsetX = x - (int)GetPosition().X;
-            int offsetY = y - (int)GetPosition().Y;
+        //public void SetPosition(int x, int y)
+        //{
+        //    int offsetX = x - (int)GetPosition().X;
+        //    int offsetY = y - (int)GetPosition().Y;
 
-            foreach (var block in blocks)
-            {
-                block.X = offsetX;
-                block.Y = offsetY;
-            }
-        }
+        //    foreach (var block in blocks)
+        //    {
+        //        block.X = offsetX;
+        //        block.Y = offsetY;
+        //    }
+        //}
         public void Move(int deltaX, int deltaY)
         {
             foreach (var block in blocks)
@@ -108,15 +108,15 @@ namespace Tetris.Model
         }
 
         // päivittämään palikan positiot gridiin
-        public void UpdateBlockPositionsToGrid(Grid grid)
-        {
-            foreach (var block in blocks) 
-            {
-                int gridX = (int)GetPosition().X + block.X;
-                int gridY = (int)GetPosition().Y + block.Y;
-                grid.SetCellOccupancy(gridX, gridY, true);
-            }
-        }
+        //public void UpdateBlockPositionsToGrid(Grid grid)
+        //{
+        //    foreach (var block in blocks) 
+        //    {
+        //        int gridX = (int)GetPosition().X + block.X;
+        //        int gridY = (int)GetPosition().Y + block.Y;
+        //        grid.SetCellOccupancy(gridX, gridY, true);
+        //    }
+        //}
     }
     internal class Block
     {

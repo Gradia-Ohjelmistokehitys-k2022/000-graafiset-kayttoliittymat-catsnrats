@@ -12,7 +12,7 @@ namespace Tetris.Model
 {
     public class GameState
     {
-        private List<Tetromino> tetrominos;
+        public List<Tetromino> tetrominos;
         public Tetromino CurrentTetromino { get; private set; }
 
         public Tetromino? currentTetromino;
