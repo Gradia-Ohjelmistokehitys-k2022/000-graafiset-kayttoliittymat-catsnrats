@@ -14,6 +14,7 @@ namespace TetrisGame
         private int[,] currentBlock;
         private System.Windows.Forms.Timer gameTimer = new System.Windows.Forms.Timer();
         private Random random = new Random();
+        private int score = 0; // muuttuja pisteytykseen
 
         public Tetris()
         {
@@ -79,17 +80,25 @@ namespace TetrisGame
             if (!MoveBlock(0, 1))
             {
                 MergeBlock();
+                int linesCleared = CheckForLines();
+                score += linesCleared; // kasvattaa pistemäärää
+                UpdateScoreLabel();
                 CheckForLines();
                 currentBlock = GenerateRandomBlock();
                 currentBlockPosition = new Point(3, 0);
                 if (!MoveBlock(0, 1))
                 {
                     gameTimer.Stop();
-                    MessageBox.Show("Game Over");
+                    MessageBox.Show("Never Ending Game");
                     InitializeGame();
                 }
             }
             Refresh();
+        }
+
+        private void UpdateScoreLabel() // pisteytys txt-labeliin
+        {
+            labelLines.Text = "Pisteet: " + score.ToString();
         }
 
         private bool MoveBlock(int deltaX, int deltaY)
@@ -175,8 +184,10 @@ namespace TetrisGame
             }
         }
 
-        private void CheckForLines()
+        private int CheckForLines()
         {
+            int linesCleared = 0;
+
             for (int y = BoardHeight - 1; y >= 0; y--)
             {
                 bool isLineFull = true;
@@ -192,8 +203,10 @@ namespace TetrisGame
                 {
                     RemoveLine(y);
                     y++;
+                    linesCleared++;
                 }
             }
+            return linesCleared;
         }
 
         private void RemoveLine(int line)
@@ -240,8 +253,7 @@ namespace TetrisGame
             {
                 g.DrawLine(gridPen, 0, y * blockSize, BoardWidth * blockSize, y * blockSize);
             }
-
-            // Draw the current block
+                        
             if (currentBlock != null) // liikuteltavan / putoavan tetron piirto
             {
                 int blockWidth = currentBlock.GetLength(0);
