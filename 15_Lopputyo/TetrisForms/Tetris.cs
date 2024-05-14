@@ -151,7 +151,7 @@ namespace TetrisGame
             return true;
         }
 
-        private void MergeBlock()
+        private void MergeBlock() // käsittelee pysähtyneen tetron...
         {
             int blockWidth = currentBlock.GetLength(0);
             int blockHeight = currentBlock.GetLength(1);
@@ -211,6 +211,7 @@ namespace TetrisGame
         {
             Graphics g = e.Graphics;
             int blockSize = 25;
+            Pen gridPen = new Pen(Color.Black); // pelialueen väri
 
             // Draw the board
             for (int x = 0; x < BoardWidth; x++)
@@ -224,13 +225,24 @@ namespace TetrisGame
                         int yPos = y * blockSize;
                         Rectangle blockRect = new Rectangle(xPos, yPos, blockSize, blockSize);
 
-                        g.FillRectangle(Brushes.Purple, blockRect);
+                        g.FillRectangle(Brushes.Purple, blockRect); // pysähtyneen tetron väri
                     }
                 }
             }
 
+            // piirtää pelin alustan
+            for (int x = 0; x <= BoardWidth; x++)
+            {
+                g.DrawLine(gridPen, x * blockSize, 0, x * blockSize, BoardHeight * blockSize);
+            }
+
+            for (int y = 0; y <= BoardHeight; y++)
+            {
+                g.DrawLine(gridPen, 0, y * blockSize, BoardWidth * blockSize, y * blockSize);
+            }
+
             // Draw the current block
-            if (currentBlock != null)
+            if (currentBlock != null) // liikuteltavan / putoavan tetron piirto
             {
                 int blockWidth = currentBlock.GetLength(0);
                 int blockHeight = currentBlock.GetLength(1);
