@@ -24,7 +24,7 @@ namespace TetrisGame
             this.Paint += Form1_Paint;
         }
 
-        private void InitializeGame()
+        private void InitializeGame() // uuden pelin alustus...
         {
             for (int x = 0; x < BoardWidth; x++)
             {
@@ -75,7 +75,7 @@ namespace TetrisGame
             return block;
         }
 
-        private void GameTick(object? sender, EventArgs e)
+        private void GameTick(object? sender, EventArgs e) // looppi "Never Ending Game"
         {
             if (!MoveBlock(0, 1))
             {
@@ -184,7 +184,7 @@ namespace TetrisGame
             }
         }
 
-        private int CheckForLines()
+        private int CheckForLines() // täysien rivien käsittely
         {
             int linesCleared = 0;
 

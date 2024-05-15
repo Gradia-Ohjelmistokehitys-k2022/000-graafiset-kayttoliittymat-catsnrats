@@ -36,7 +36,7 @@ namespace TetrisGame
             // 
             labelLines.AutoSize = true;
             labelLines.Font = new Font("Showcard Gothic", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelLines.Location = new Point(638, 234);
+            labelLines.Location = new Point(325, 41);
             labelLines.Name = "labelLines";
             labelLines.Size = new Size(113, 44);
             labelLines.TabIndex = 1;
@@ -46,7 +46,7 @@ namespace TetrisGame
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1446, 1136);
+            ClientSize = new Size(556, 601);
             Controls.Add(labelLines);
             Name = "Tetris";
             Text = "Tetris";
